@@ -23,10 +23,20 @@ namespace WindowsGame1
         Element pokemon2;
         Element pokemon3;
         Element pokemon4;
-        
+
+        static Game1 _instance;
+
+        static public Game getGameInstance()
+        {
+            return _instance;
+        }
+
         public Game1()
         {
+            _instance = this;
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 1024;
+            graphics.PreferredBackBufferHeight = 768;
             Content.RootDirectory = "Content";
         }
 
