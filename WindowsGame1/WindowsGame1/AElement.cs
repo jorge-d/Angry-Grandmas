@@ -9,13 +9,11 @@ namespace WindowsGame1
 {
     public abstract class AElement
     {
-        protected float _posx;
-        protected float _posy;
-        protected float _speedx;
-        protected float _speedy;
+        protected float _speed_x;
+        protected float _speed_y;
 
-        protected Texture2D _texture;
-        protected Vector2 _position;
+        private Texture2D _texture;
+        private Vector2 _position;
 
         protected Rectangle _rectangle;
 
@@ -25,10 +23,8 @@ namespace WindowsGame1
 
         public AElement(string texture_path, float posx, float posy, float speed_x, float speed_y)
         {
-            _posx = posx;
-            _posy = posy;
-            _speedx = speed_x;
-            _speedy = speed_y;
+            _speed_x = speed_x;
+            _speed_y = speed_y;
             _texture = _game.Content.Load<Texture2D>(texture_path);
 
             _color = Color.White;
@@ -57,5 +53,21 @@ namespace WindowsGame1
         {
             return _position;
         }
+
+        public void setPosition(float x, float y)
+        {
+            _position.X = checkBoudaries((int)x, 0, Defaults.window_size_x - _texture.Width);
+            _position.Y = checkBoudaries((int)y, 0, Defaults.window_size_y - _texture.Height);
+        }
+
+        private int checkBoudaries(int value, int min, int max)
+        {
+            if (value < min)
+                return min;
+            if (value > max)
+                return max;
+            return value;
+        }
+
     }
 }

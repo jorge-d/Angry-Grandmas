@@ -19,10 +19,10 @@ namespace WindowsGame1
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        Element pokemon1;
-        Element pokemon2;
-        Element pokemon3;
-        Element pokemon4;
+        HumanPlayer pokemon1;
+        //Element pokemon2;
+        //Element pokemon3;
+        //Element pokemon4;
 
         static Game1 _instance;
 
@@ -35,8 +35,8 @@ namespace WindowsGame1
         {
             _instance = this;
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 1024;
-            graphics.PreferredBackBufferHeight = 768;
+            graphics.PreferredBackBufferWidth = Defaults.window_size_x;
+            graphics.PreferredBackBufferHeight = Defaults.window_size_y;
             Content.RootDirectory = "Content";
         }
 
@@ -63,10 +63,12 @@ namespace WindowsGame1
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            pokemon1 = new Element(Window, Content, @"Images/pikachu", 0, 0, 5f, 5f, false);
-            pokemon4 = new Element(Window, Content, @"Images/machoc", 0, 0, 5f, 5f, true);
-            pokemon2 = new Element(Window, Content, @"Images/poke1", 500, 200, 0.8f, 2.3f);
-            pokemon3 = new Element(Window, Content, @"Images/poke2", 0, 0, 4.2f, 2.4f);
+
+            pokemon1 = new HumanPlayer(@"Images/pikachu", 5f, 5f);
+            //pokemon1 = new Element(Window, Content, @"Images/pikachu", 0, 0, 5f, 5f, false);
+            //pokemon4 = new Element(Window, Content, @"Images/machoc", 0, 0, 5f, 5f, true);
+            //pokemon2 = new Element(Window, Content, @"Images/poke1", 500, 200, 0.8f, 2.3f);
+            //pokemon3 = new Element(Window, Content, @"Images/poke2", 0, 0, 4.2f, 2.4f);
         }
 
         /// <summary>
@@ -91,9 +93,9 @@ namespace WindowsGame1
 
             // TODO: Add your update logic here
             pokemon1.update();
-            pokemon2.update();
-            pokemon3.update();
-            pokemon4.update();
+            //pokemon2.update();
+            //pokemon3.update();
+            //pokemon4.update();
 
             base.Update(gameTime);
         }
@@ -109,9 +111,9 @@ namespace WindowsGame1
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             pokemon1.draw(spriteBatch);
-            pokemon2.draw(spriteBatch);
-            pokemon3.draw(spriteBatch);
-            pokemon4.draw(spriteBatch);
+            //pokemon2.draw(spriteBatch);
+            //pokemon3.draw(spriteBatch);
+            //pokemon4.draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
