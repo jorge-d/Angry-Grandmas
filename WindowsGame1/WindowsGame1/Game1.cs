@@ -19,10 +19,7 @@ namespace WindowsGame1
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        HumanPlayer pokemon1;
-        //Element pokemon2;
-        //Element pokemon3;
-        //Element pokemon4;
+        LinkedList<AElement> _elements;
 
         static Game1 _instance;
 
@@ -34,10 +31,13 @@ namespace WindowsGame1
         public Game1()
         {
             _instance = this;
+
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = Defaults.window_size_x;
             graphics.PreferredBackBufferHeight = Defaults.window_size_y;
             Content.RootDirectory = "Content";
+
+            _elements = new LinkedList<AElement>();
         }
 
         /// <summary>
@@ -63,12 +63,7 @@ namespace WindowsGame1
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-
-            pokemon1 = new HumanPlayer(@"Images/pikachu", 5f, 5f);
-            //pokemon1 = new Element(Window, Content, @"Images/pikachu", 0, 0, 5f, 5f, false);
-            //pokemon4 = new Element(Window, Content, @"Images/machoc", 0, 0, 5f, 5f, true);
-            //pokemon2 = new Element(Window, Content, @"Images/poke1", 500, 200, 0.8f, 2.3f);
-            //pokemon3 = new Element(Window, Content, @"Images/poke2", 0, 0, 4.2f, 2.4f);
+            this.addElement(new HumanPlayer(5f, 5f));
         }
 
         /// <summary>
@@ -91,13 +86,21 @@ namespace WindowsGame1
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            LinkedList<AElement> elements = new LinkedList<AElement>(_elements);
+
             // TODO: Add your update logic here
-            pokemon1.update();
-            //pokemon2.update();
-            //pokemon3.update();
-            //pokemon4.update();
+            foreach (AElement element in elements)
+            {
+                if (!element.update())
+                    _elements.Remove(element);
+            }
 
             base.Update(gameTime);
+        }
+
+        public void addElement(AElement elem)
+        {
+            _elements.AddLast(elem);
         }
 
         /// <summary>
@@ -110,10 +113,10 @@ namespace WindowsGame1
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            pokemon1.draw(spriteBatch);
-            //pokemon2.draw(spriteBatch);
-            //pokemon3.draw(spriteBatch);
-            //pokemon4.draw(spriteBatch);
+            foreach (AElement element in _elements)
+            {
+                element.draw(spriteBatch);
+            }
             spriteBatch.End();
 
             base.Draw(gameTime);

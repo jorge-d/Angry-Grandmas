@@ -10,24 +10,41 @@ namespace WindowsGame1
 {
     class HumanPlayer : APlayer
     {
-        public HumanPlayer(string texture_path, float posx, float posy) :
-            base(texture_path, posx, posy, Defaults.player_speed_x, Defaults.player_speed_y, Defaults.player_health)
+        public HumanPlayer(float posx, float posy) :
+            base(Defaults.human_texture_path, posx, posy, Defaults.player_speed_x, Defaults.player_speed_y, Defaults.player_health)
         {
         }
 
         public override bool update()
         {
-            Console.Out.WriteLine("update player");
             this.updateUsingKeyboard();
 
             //check_intersections();
             return true;
         }
 
+        //public void check_intersections()
+        //{
+        //    Rectangle rectangle = rectangles[instance_count];
+
+        //    rectangle.X = (int)position.X;
+        //    rectangle.Y = (int)position.Y;
+        //    rectangle.Width = texture.Width;
+        //    rectangle.Height = texture.Height;
+
+        //    // Doesn't seem to update the reference in the list, need to check why...
+        //    rectangles[instance_count] = rectangle;
+
+        //    if (has_intersected(rectangle))
+        //        color = Color.Red;
+        //    else
+        //        color = Color.White;
+        //}
+
         public void updateUsingKeyboard()
         {
             Vector2 pos = getPosition();
-            Console.Out.WriteLine("BEFORE : " + pos);
+
             float newX = pos.X;
             float newY = pos.Y;
 
@@ -43,11 +60,10 @@ namespace WindowsGame1
             if (kS.IsKeyDown(Keys.S))
                 newY += _speed_y;
 
-            //pos.X = newX;
-            //pos.Y = newY;
+            if (kS.IsKeyDown(Keys.Space))
+                ((Game1)_game).addElement(new Sheep(newX - 50f, newY - 50f));
+
             this.setPosition(newX, newY);
-            //pos.X = this.checkBoudaries((int)newX, 0, Window.ClientBounds.Width - texture.Width);
-            //pos.Y = this.checkBoudaries((int)newY, 0, Window.ClientBounds.Height - texture.Height);
         }
 
         private int checkBoudaries(int value, int min, int max)
