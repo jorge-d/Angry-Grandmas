@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace WindowsGame1
 {
-    abstract class AElement
+    public abstract class AElement
     {
         protected float _posx;
         protected float _posy;
