@@ -61,7 +61,7 @@ namespace WindowsGame1
                 newY += _speed_y;
 
             if (kS.IsKeyDown(Keys.Space))
-                ((Game1)_game).addElement(new Sheep(newX - 50f, newY - 50f));
+                Stage.getInstance().addElement(new Sheep(newX - 50f, newY - 50f));
 
             this.setPosition(newX, newY);
         }

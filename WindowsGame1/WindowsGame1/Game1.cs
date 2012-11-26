@@ -16,31 +16,11 @@ namespace WindowsGame1
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        Texture2D brick;
-        Texture2D ground;
-        int[,] level = new int[,]
-           {{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
+        private GraphicsDeviceManager graphics;
 
-        LinkedList<AElement> _elements;
-
+        private SpriteBatch spriteBatch;
         static Game1 _instance;
+        private Stage _stage;
 
         static public Game getGameInstance()
         {
@@ -56,7 +36,7 @@ namespace WindowsGame1
             graphics.PreferredBackBufferHeight = Defaults.window_size_y;
             Content.RootDirectory = "Content";
 
-            _elements = new LinkedList<AElement>();
+            _stage = Stage.getInstance();
         }
 
         /// <summary>
@@ -80,10 +60,9 @@ namespace WindowsGame1
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            brick = Content.Load<Texture2D>(@"Images/brick");
-            ground = Content.Load<Texture2D>(@"Images/ground");
             // TODO: use this.Content to load your game content here
-            this.addElement(new HumanPlayer(5f, 5f));
+
+            _stage.init(1);
         }
 
         /// <summary>
@@ -106,21 +85,9 @@ namespace WindowsGame1
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            LinkedList<AElement> elements = new LinkedList<AElement>(_elements);
-
-            // TODO: Add your update logic here
-            foreach (AElement element in elements)
-            {
-                if (!element.update())
-                    _elements.Remove(element);
-            }
+            _stage.update();
 
             base.Update(gameTime);
-        }
-
-        public void addElement(AElement elem)
-        {
-            _elements.AddLast(elem);
         }
 
         /// <summary>
@@ -133,24 +100,7 @@ namespace WindowsGame1
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            for (int x = 0; x < level.GetLength(0); x++)
-            {
-                for (int y = 0; y < level.GetLength(1); y++)
-                {
-                    if (level[x, y] == 1)
-                    {
-                        spriteBatch.Draw(brick, new Vector2(32 * y, 32 * x), Color.White);
-                    }
-                    else if (level[x, y] == 0)
-                    {
-                        spriteBatch.Draw(ground, new Vector2(32 * y, 32 * x), Color.White);
-                    }
-                }
-            }
-            foreach (AElement element in _elements)
-            {
-                element.draw(spriteBatch);
-            }
+            _stage.draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
