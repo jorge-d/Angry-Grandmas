@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework;
 
 namespace WindowsGame1
 {
@@ -13,7 +14,7 @@ namespace WindowsGame1
         {
         }
 
-        public override bool update()
+        public override bool update(GameTime gameTime)
         {
             KeyboardState kS = Keyboard.GetState();
 

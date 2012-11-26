@@ -85,7 +85,7 @@ namespace WindowsGame1
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            _stage.update();
+            _stage.update(gameTime);
 
             base.Update(gameTime);
         }

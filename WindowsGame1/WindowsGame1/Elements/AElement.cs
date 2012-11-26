@@ -12,14 +12,15 @@ namespace WindowsGame1
         protected float _speed_x;
         protected float _speed_y;
 
-        private Texture2D _texture;
+        protected Texture2D _texture;
         private Vector2 _position;
 
         protected Rectangle _rectangle;
 
         protected Color _color;
-        protected int width { get { return _texture.Width; } }
-        protected int height { get { return _texture.Height; } }
+
+        protected int Width { set; get; }
+        protected int Height { set; get; }
 
         static protected Game _game = Game1.getGameInstance();
 
@@ -29,15 +30,17 @@ namespace WindowsGame1
             _speed_y = speed_y;
             _texture = _game.Content.Load<Texture2D>(texture_path);
 
+            Width = _texture.Width;
+            Height = _texture.Height;
             _color = Color.White;
             _position = new Vector2(posx, posy);
         }
 
         // Should return false if the object is dead.
         // Returns true otherwise.
-        public abstract bool update();
+        public abstract bool update(GameTime gameTime);
 
-        public void draw(SpriteBatch batch)
+        public virtual void draw(SpriteBatch batch)
         {
             batch.Draw(_texture, _position, null, _color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
@@ -46,8 +49,8 @@ namespace WindowsGame1
         {
             _rectangle.X = (int)_position.X;
             _rectangle.Y = (int)_position.Y;
-            _rectangle.Width = width;
-            _rectangle.Height = height;
+            _rectangle.Width = Width;
+            _rectangle.Height = Height;
             return _rectangle;
         }
 
@@ -58,8 +61,8 @@ namespace WindowsGame1
 
         public void setPosition(float x, float y)
         {
-            _position.X = checkBoudaries((int)x, 0, Defaults.window_size_x - width);
-            _position.Y = checkBoudaries((int)y, 0, Defaults.window_size_y - height);
+            _position.X = checkBoudaries((int)x, 0, Defaults.window_size_x - Width);
+            _position.Y = checkBoudaries((int)y, 0, Defaults.window_size_y - Height);
         }
 
         private int checkBoudaries(int value, int min, int max)

@@ -71,13 +71,13 @@ namespace WindowsGame1
             return true;
         }
 
-        public int update()
+        public int update(GameTime gametime)
         {
             LinkedList<AElement> elements = new LinkedList<AElement>(_elements);
 
             foreach (AElement element in elements)
             {
-                if (!element.update())
+                if (!element.update(gametime))
                     _elements.Remove(element);
             }
             return 0;
