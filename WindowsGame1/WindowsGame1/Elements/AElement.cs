@@ -18,6 +18,8 @@ namespace WindowsGame1
         protected Rectangle _rectangle;
 
         protected Color _color;
+        protected int width { get { return _texture.Width; } }
+        protected int height { get { return _texture.Height; } }
 
         static protected Game _game = Game1.getGameInstance();
 
@@ -44,8 +46,8 @@ namespace WindowsGame1
         {
             _rectangle.X = (int)_position.X;
             _rectangle.Y = (int)_position.Y;
-            _rectangle.Width = _texture.Width;
-            _rectangle.Height = _texture.Height;
+            _rectangle.Width = width;
+            _rectangle.Height = height;
             return _rectangle;
         }
 
@@ -56,8 +58,8 @@ namespace WindowsGame1
 
         public void setPosition(float x, float y)
         {
-            _position.X = checkBoudaries((int)x, 0, Defaults.window_size_x - _texture.Width);
-            _position.Y = checkBoudaries((int)y, 0, Defaults.window_size_y - _texture.Height);
+            _position.X = checkBoudaries((int)x, 0, Defaults.window_size_x - width);
+            _position.Y = checkBoudaries((int)y, 0, Defaults.window_size_y - height);
         }
 
         private int checkBoudaries(int value, int min, int max)

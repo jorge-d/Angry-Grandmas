@@ -107,17 +107,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AElement.cs" />
-    <Compile Include="APlayer.cs" />
+    <Compile Include="Elements\AElement.cs" />
+    <Compile Include="Elements\APlayer.cs" />
     <Compile Include="Defaults.cs" />
-    <Compile Include="HumanPlayer.cs" />
+    <Compile Include="Elements\HumanPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="Sheep.cs" />
+    <Compile Include="Elements\Sheep.cs" />
     <Compile Include="SpriteSheet.cs" />
     <Compile Include="Stage.cs" />
-    <Compile Include="Wall.cs" />
+    <Compile Include="Elements\Wall.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

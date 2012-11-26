@@ -19,27 +19,21 @@ namespace WindowsGame1
         {
             this.updateUsingKeyboard();
 
-            //check_intersections();
             return true;
         }
 
-        //public void check_intersections()
-        //{
-        //    Rectangle rectangle = rectangles[instance_count];
+        private bool canMove(int x, int y)
+        {
+            LinkedList<AElement> elements = new LinkedList<AElement>();
 
-        //    rectangle.X = (int)position.X;
-        //    rectangle.Y = (int)position.Y;
-        //    rectangle.Width = texture.Width;
-        //    rectangle.Height = texture.Height;
-
-        //    // Doesn't seem to update the reference in the list, need to check why...
-        //    rectangles[instance_count] = rectangle;
-
-        //    if (has_intersected(rectangle))
-        //        color = Color.Red;
-        //    else
-        //        color = Color.White;
-        //}
+            Stage.getInstance().getIntersections(new Rectangle(x, y, width, height), ref elements);
+            foreach (AElement elem in elements)
+            {
+                if (elem != this)
+                    return false;
+            }
+            return true;
+        }
 
         public void updateUsingKeyboard()
         {
@@ -63,7 +57,11 @@ namespace WindowsGame1
             if (kS.IsKeyDown(Keys.Space))
                 Stage.getInstance().addElement(new Sheep(newX - 50f, newY - 50f));
 
-            this.setPosition(newX, newY);
+            if (kS.IsKeyDown(Keys.P))
+                _game.Exit();
+
+            if (canMove((int)newX, (int)newY))
+                this.setPosition(newX, newY);
         }
 
         private int checkBoudaries(int value, int min, int max)
