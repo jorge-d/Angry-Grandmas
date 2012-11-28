@@ -9,7 +9,7 @@ namespace WindowsGame1
     public class Wall : AElement
     {
         public Wall(float posx, float posy) :
-            base(@"Images/brick", posx, posy, 0, 0)
+            base(EntityType.WALL, @"Images/brick", posx, posy, 0, 0)
         {
         }
 

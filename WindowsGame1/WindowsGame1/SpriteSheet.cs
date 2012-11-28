@@ -28,7 +28,6 @@ namespace WindowsGame1
             m_spriteHeight = spriteHeight;
             x = frame_x;
             y = frame_y;
-            m_sourceRect = new Rectangle(x * m_spriteWidth, y * m_spriteHeight, m_spriteWidth, m_spriteHeight);
         }
 
         private void updateSourceRec()
@@ -36,58 +35,43 @@ namespace WindowsGame1
             m_sourceRect = new Rectangle(x * m_spriteWidth, y * m_spriteHeight, m_spriteWidth, m_spriteHeight);
         }
 
-        protected int getX()
-        {
-            return x;
-        }
-
-        protected int getY()
-        {
-            return y;
-        }
-
+        protected int getX() { return x; }
+        protected int getY() { return y; }
         protected void setX(int frame_x)
         {
             x = frame_x;
-            updateSourceRec();
         }
-
         protected void incrementX()
         {
             x++;
-            updateSourceRec();
         }
-
+        protected void decrementX()
+        {
+            x--;
+        }
         protected void setY(int frame_y)
         {
              y = frame_y;
-             updateSourceRec();
         }
-
         protected void incrementY()
         {
             y++;
-            updateSourceRec();
         }
-
-        protected void resetTimer()
+        protected void decrementY()
         {
-            m_timer = 0f;
+            y--;
         }
 
-        public bool isTimerElapsed()
-        {
-            return (m_timer > m_interval);
-        }
-
-        public void update(GameTime gameTime)
-        {
-            m_timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-        }
-
+        protected void resetTimer() { m_timer = 0f; }
+        protected bool isTimerElapsed() { return (m_timer > m_interval); }
+        
+        public void update(GameTime gameTime) { m_timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds; }
         public Rectangle SourceRect
         {
-            get { return m_sourceRect; }
+            get {
+                updateSourceRec();
+                return m_sourceRect;
+            }
             set { m_sourceRect = value; }
         }
     }

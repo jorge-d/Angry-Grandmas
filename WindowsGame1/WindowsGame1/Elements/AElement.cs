@@ -22,10 +22,13 @@ namespace WindowsGame1
         protected int Width { set; get; }
         protected int Height { set; get; }
 
+        EntityType _type;
+
         static protected Game _game = Game1.getGameInstance();
 
-        public AElement(string texture_path, float posx, float posy, float speed_x, float speed_y)
+        public AElement(EntityType type, string texture_path, float posx, float posy, float speed_x, float speed_y)
         {
+            _type = type;
             _speed_x = speed_x;
             _speed_y = speed_y;
             _texture = _game.Content.Load<Texture2D>(texture_path);
@@ -34,6 +37,11 @@ namespace WindowsGame1
             Height = _texture.Height;
             _color = Color.White;
             _position = new Vector2(posx, posy);
+        }
+
+        public EntityType GetElementType()
+        {
+            return _type;
         }
 
         // Should return false if the object is dead.
@@ -73,6 +81,5 @@ namespace WindowsGame1
                 return max;
             return value;
         }
-
     }
 }

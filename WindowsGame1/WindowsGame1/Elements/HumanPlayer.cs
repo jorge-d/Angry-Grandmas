@@ -12,6 +12,8 @@ namespace WindowsGame1
     class HumanPlayer : APlayer
     {
         HumanSpriteAnimation sprite;
+        protected float shoot_timer = 0f;
+        protected const float shoot_interval = 600f;
 
         public HumanPlayer(float posx, float posy) :
             base(Defaults.human_texture_path, posx, posy, Defaults.player_speed_x, Defaults.player_speed_y, Defaults.player_health)
@@ -38,17 +40,25 @@ namespace WindowsGame1
             LinkedList<AElement> elements = new LinkedList<AElement>();
             Stage.getInstance().getIntersections(new Rectangle(x, y, Width, Height), ref elements);
             foreach (AElement elem in elements)
-            {
                 if (elem != this)
-                    return false;
-            }
+                {
+                    EntityType type = elem.GetElementType();
+                    if (type == EntityType.WALL)
+                        return false;
+                }
             return true;
         }
 
-        private void shoot(KeyboardState kS)
+        private void shoot(GameTime gameTime, KeyboardState kS)
         {
-            if (kS.IsKeyDown(Keys.Space))
-                Stage.getInstance().addElement(new Sheep(getPosition().X - 150f, getPosition().Y - 150f));            
+            shoot_timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            Direction looking_at = sprite.getLookingDirection();
+
+            if (kS.IsKeyDown(Keys.Space) && shoot_timer > shoot_interval)
+            {
+                shoot_timer = 0f;
+                Stage.getInstance().addElement(new Cloud(this, looking_at, getPosition().X, getPosition().Y));
+            }
         }
 
         private Direction moveUsingKeyboard(KeyboardState kS, ref float newX, ref float newY)
@@ -89,7 +99,7 @@ namespace WindowsGame1
 
             Direction dir = moveUsingKeyboard(kS, ref newX, ref newY);
             sprite.animate(dir);
-            shoot(kS);
+            shoot(gameTime, kS);
 
             if (canMove((int)newX, (int)newY))
                 this.setPosition(newX, newY);

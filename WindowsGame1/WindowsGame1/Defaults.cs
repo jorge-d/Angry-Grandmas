@@ -6,6 +6,7 @@ using System.Text;
 namespace WindowsGame1
 {
     public enum Direction { NONE, LEFT, UP, DOWN, RIGHT};
+    public enum EntityType { WALL, PLAYER, BULLET, BONUS }
 
     public class Defaults
     {
@@ -26,5 +27,8 @@ namespace WindowsGame1
         static public float sheep_speed_x = 2f;
         static public float sheep_speed_y = 2f;
         static public int sheep_health = 10;
+
+        static public int cloud_damages = 2;
+        static public string cloud_texture = @"Images/cloud";
     }
 }
