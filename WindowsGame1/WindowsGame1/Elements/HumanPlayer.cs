@@ -12,8 +12,6 @@ namespace WindowsGame1
     class HumanPlayer : APlayer
     {
         HumanSpriteAnimation sprite;
-        Direction _previous_state;
-        Direction _current_state;
 
         public HumanPlayer(float posx, float posy) :
             base(Defaults.human_texture_path, posx, posy, Defaults.player_speed_x, Defaults.player_speed_y, Defaults.player_health)
@@ -26,14 +24,12 @@ namespace WindowsGame1
         public override bool update(GameTime gameTime)
         {
             sprite.update(gameTime);
-            this.updateUsingKeyboard(gameTime);
-
+            updateUsingKeyboard(gameTime);
             return true;
         }
 
         public override void draw(SpriteBatch spriteBatch)
         {
-            sprite.calculate();
             spriteBatch.Draw(_texture, getPosition(), sprite.SourceRect, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0);
         }
 
@@ -49,42 +45,51 @@ namespace WindowsGame1
             return true;
         }
 
-        public void updateUsingKeyboard(GameTime gameTime)
+        private void shoot(KeyboardState kS)
         {
+            if (kS.IsKeyDown(Keys.Space))
+                Stage.getInstance().addElement(new Sheep(getPosition().X - 150f, getPosition().Y - 150f));            
+        }
+
+        private Direction moveUsingKeyboard(KeyboardState kS, ref float newX, ref float newY)
+        {
+            if (kS.IsKeyDown(Keys.P))
+                _game.Exit();
+
+            if (kS.IsKeyDown(Keys.A))
+            {
+                newX -= _speed_x;
+                return Direction.LEFT;
+            }
+            else if (kS.IsKeyDown(Keys.D))
+            {
+                newX += _speed_x;
+                return Direction.RIGHT;
+            }
+            else if (kS.IsKeyDown(Keys.W))
+            {
+                newY -= _speed_y;
+                return Direction.UP;
+            }
+            else if (kS.IsKeyDown(Keys.S))
+            {
+                newY += _speed_y;
+                return Direction.DOWN;
+            }
+            return Direction.NONE;
+        }
+
+        private void updateUsingKeyboard(GameTime gameTime)
+        {
+            KeyboardState kS = Keyboard.GetState();
             Vector2 pos = getPosition();
 
             float newX = pos.X;
             float newY = pos.Y;
 
-            KeyboardState kS = Keyboard.GetState();
-
-            if (kS.IsKeyDown(Keys.A))
-            {
-                newX -= _speed_x;
-                sprite.animateLeft();
-            }
-            else if (kS.IsKeyDown(Keys.D))
-            {
-                newX += _speed_x;
-                sprite.animateRight();
-            }
-
-            if (kS.IsKeyDown(Keys.W))
-            {
-                newY -= _speed_y;
-                sprite.animateUp();
-            }
-            else if (kS.IsKeyDown(Keys.S))
-            {
-                newY += _speed_y;
-                sprite.animateDown();
-            }
-
-            if (kS.IsKeyDown(Keys.Space))
-                Stage.getInstance().addElement(new Sheep(newX - 50f, newY - 50f));
-
-            if (kS.IsKeyDown(Keys.P))
-                _game.Exit();
+            Direction dir = moveUsingKeyboard(kS, ref newX, ref newY);
+            sprite.animate(dir);
+            shoot(kS);
 
             if (canMove((int)newX, (int)newY))
                 this.setPosition(newX, newY);
@@ -92,93 +97,111 @@ namespace WindowsGame1
 
         private class HumanSpriteAnimation : SpriteSheet
         {
+            Direction _previous_state;
+            Direction _current_state = Direction.DOWN;
+
             public HumanSpriteAnimation(int spriteWidth, int spriteHeight)
-                : base(0, spriteWidth, spriteHeight)
+                : base(0, 0, spriteWidth, spriteHeight)
             {
             }
 
-            public void animateRight()
+            public Direction getLookingDirection()
             {
-                //Check if the keyboard state is a new one, if it is snap straight to the standing 
-                //frame for the direction. Allows quick turning
-                if (m_currentState != m_previousState)
+                return _current_state;
+            }
+
+            public void animate(Direction dir)
+            {
+                _previous_state = _current_state;
+
+                if (dir != Direction.NONE)
+                    _current_state = dir;
+
+                switch (dir)
                 {
-                    m_currentFrame = 4;
-                }
-
-                //Check if timer is greater than interval
-                if (m_timer > m_interval)
-                {
-                    //If is incrememnt current frame
-                    m_currentFrame++;
-
-
-                    //Check frame is within direction frames, if not set back to standing
-                    if (m_currentFrame > 5)
-                    {
-                        m_currentFrame = 3;
-                    }
-
-                    //Reset timer
-                    m_timer = 0f;
+                    case Direction.LEFT:
+                        animateLeft();
+                        break;
+                    case Direction.RIGHT:
+                        animateRight();
+                        break;
+                    case Direction.UP:
+                        animateUp();
+                        break;
+                    case Direction.DOWN:
+                        animateDown();
+                        break;
+                    default:
+                        finishCurrentMovment();
+                        break;
                 }
             }
 
-            public void animateLeft()
+            private void finishCurrentMovment()
             {
-                if (m_currentState != m_previousState)
-                {
-                    m_currentFrame = 7;
-                }
+                if (getX() >= 0 && getX() <= 2)
+                    setX(1);
+                if (getX() >= 3 && getX() <= 5)
+                    setX(4);
+                if (getX() >= 6 && getX() <= 8)
+                    setX(7);
+                if (getX() >= 9 && getX() <= 11)
+                    setX(10);
+            }
 
-                if (m_timer > m_interval)
-                {
-                    m_currentFrame++;
+            private void animateRight()
+            {
+                if (_current_state != _previous_state)
+                    setX(4);
 
-                    if (m_currentFrame > 8)
-                    {
-                        m_currentFrame = 6;
-                    }
-                    m_timer = 0f;
+                if (isTimerElapsed())
+                {
+                    incrementX();
+                    resetTimer();
+                    if (getX() > 5)
+                        setX(3);
                 }
             }
 
-            public void animateDown()
+            private void animateLeft()
             {
-                if (m_currentState != m_previousState)
-                {
-                    m_currentFrame = 1;
-                }
+                if (_current_state != _previous_state)
+                    setX(7);
 
-                if (m_timer > m_interval)
+                if (isTimerElapsed())
                 {
-                    m_currentFrame++;
-
-                    if (m_currentFrame > 2)
-                    {
-                        m_currentFrame = 0;
-                    }
-                    m_timer = 0f;
+                    incrementX();
+                    resetTimer();
+                    if (getX() > 8)
+                        setX(6);
                 }
             }
 
-            public void animateUp()
+            private void animateDown()
             {
-                //if (m_currentState != m_previousState)
-                if (m_currentFrame < 9)
+                if (_current_state != _previous_state)
+                    setX(1);
+
+                if (isTimerElapsed())
                 {
-                    m_currentFrame = 10;
+                    incrementX();
+                    resetTimer();
+                    if (getX() > 2)
+                        setX(0);
                 }
+            }
 
-                if (m_timer > m_interval)
+            private void animateUp()
+            {
+                if (_current_state != _previous_state)
+                    setX(10);
+
+                if (isTimerElapsed())
                 {
-                    m_currentFrame++;
-
-                    if (m_currentFrame > 11)
-                    {
-                        m_currentFrame = 9;
-                    }
-                    m_timer = 0f;
+                    incrementX();
+                    resetTimer();
+                    if (getX() > 11)
+                        setX(9);
                 }
             }
 

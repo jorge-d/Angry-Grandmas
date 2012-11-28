@@ -15,54 +15,70 @@ namespace WindowsGame1
     class SpriteSheet
     {
         protected float m_timer = 0f;
-        protected float m_interval = 100f;
-        protected int m_currentFrame;
+        protected float m_interval = Defaults.animation_movement_interval;
+        protected int x;
+        protected int y;
         private int m_spriteWidth;
         private int m_spriteHeight;
         private Rectangle m_sourceRect;
 
-        protected KeyboardState m_currentState;
-        protected KeyboardState m_previousState;
-
-        public SpriteSheet(int currentFrame, int spriteWidth, int spriteHeight)
+        public SpriteSheet(int frame_x, int frame_y, int spriteWidth, int spriteHeight)
         {
             m_spriteWidth = spriteWidth;
             m_spriteHeight = spriteHeight;
-            m_currentFrame = currentFrame;
+            x = frame_x;
+            y = frame_y;
+            m_sourceRect = new Rectangle(x * m_spriteWidth, y * m_spriteHeight, m_spriteWidth, m_spriteHeight);
         }
 
-        public void calculate()
+        private void updateSourceRec()
         {
-            //Set the rectangle for drawing
-            m_sourceRect = new Rectangle(m_currentFrame * m_spriteWidth, 0, m_spriteWidth, m_spriteHeight);
+            m_sourceRect = new Rectangle(x * m_spriteWidth, y * m_spriteHeight, m_spriteWidth, m_spriteHeight);
         }
 
-            ////Keyboard States
-            //m_previousState = m_currentState;
-            //m_currentState = Keyboard.GetState();
+        protected int getX()
+        {
+            return x;
+        }
 
+        protected int getY()
+        {
+            return y;
+        }
 
-            ////Check if no keys are pressed, if they aren't reset the frame to 
-            ////the standing frame of each direction
-            //if (m_currentState.GetPressedKeys().Length == 0)
-            //{
-            //    if (m_currentFrame >= 0 && m_currentFrame <= 2)
-            //    {
-            //        m_currentFrame = 1;
-            //    }
-            //    if (m_currentFrame >= 3 && m_currentFrame <= 5)
-            //    {
-            //        m_currentFrame = 4;
-            //    }
-            //    if (m_currentFrame >= 6 && m_currentFrame <= 8)
-            //    {
-            //        m_currentFrame = 7;
-            //    }
-            //    if (m_currentFrame >= 9 && m_currentFrame <= 11)
-            //    {
-            //        m_currentFrame = 10;
-            //    }
-            //}
+        protected void setX(int frame_x)
+        {
+            x = frame_x;
+            updateSourceRec();
+        }
+
+        protected void incrementX()
+        {
+            x++;
+            updateSourceRec();
+        }
+
+        protected void setY(int frame_y)
+        {
+             y = frame_y;
+             updateSourceRec();
+        }
+
+        protected void incrementY()
+        {
+            y++;
+            updateSourceRec();
+        }
+
+        protected void resetTimer()
+        {
+            m_timer = 0f;
+        }
+
+        public bool isTimerElapsed()
+        {
+            return (m_timer > m_interval);
+        }
 
         public void update(GameTime gameTime)
         {

@@ -15,6 +15,8 @@ namespace WindowsGame1
         static public int player_width = 32;
         static public int player_height = 32;
 
+        static public float animation_movement_interval = 100f;
+
         static public int window_size_x = 1024;
         static public int window_size_y = 768;
 
