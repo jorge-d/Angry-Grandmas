@@ -7,19 +7,15 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace WindowsGame1
 {
-    class Cloud : AElement
+    class Cloud : ABullet
     {
-        private int _damages = Defaults.cloud_damages;
-        private const float CLOUD_SPEED = 3;
-        private Direction _direction;
         CloudSpriteAnimation sprite;
 
         public Cloud(HumanPlayer shooter, Direction dir, float posx, float posy) :
-            base(EntityType.BULLET, Defaults.cloud_texture, posx, posy, CLOUD_SPEED, CLOUD_SPEED)
+            base(shooter, dir, Defaults.cloud_damages, Defaults.cloud_texture, posx, posy, Defaults.cloud_speed, Defaults.cloud_speed)
         {
             Width = 32;
             Height = 32;
-            _direction = dir;
             sprite = new CloudSpriteAnimation();
         }
 
@@ -36,16 +32,16 @@ namespace WindowsGame1
             switch (_direction)
             {
                 case Direction.UP:
-                    y -= CLOUD_SPEED;
+                    y -= _speed;
                     break;
                 case Direction.DOWN:
-                    y += CLOUD_SPEED;
+                    y += _speed;
                     break;
                 case Direction.LEFT:
-                    x -= CLOUD_SPEED;
+                    x -= _speed;
                     break;
                 case Direction.RIGHT:
-                    x += CLOUD_SPEED;
+                    x += _speed;
                     break;
             }
             setPosition(x, y);
@@ -76,7 +72,7 @@ namespace WindowsGame1
             public CloudSpriteAnimation() :
                 base(0, 0, 32, 32)
             {
-                m_interval /= 2;
+                m_interval /= 4;
             }
 
             public void animate()

@@ -15,6 +15,7 @@ namespace WindowsGame1
         static public int player_health = 100;
         static public int player_width = 32;
         static public int player_height = 32;
+        static public float player_shoot_interval = 200f;
 
         static public float animation_movement_interval = 100f;
 
@@ -29,6 +30,7 @@ namespace WindowsGame1
         static public int sheep_health = 10;
 
         static public int cloud_damages = 2;
+        static public float cloud_speed = 3f;
         static public string cloud_texture = @"Images/cloud";
     }
 }

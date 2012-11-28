@@ -13,7 +13,6 @@ namespace WindowsGame1
     {
         HumanSpriteAnimation sprite;
         protected float shoot_timer = 0f;
-        protected const float shoot_interval = 600f;
 
         public HumanPlayer(float posx, float posy) :
             base(Defaults.human_texture_path, posx, posy, Defaults.player_speed_x, Defaults.player_speed_y, Defaults.player_health)
@@ -54,7 +53,7 @@ namespace WindowsGame1
             shoot_timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             Direction looking_at = sprite.getLookingDirection();
 
-            if (kS.IsKeyDown(Keys.Space) && shoot_timer > shoot_interval)
+            if (kS.IsKeyDown(Keys.Space) && shoot_timer > Defaults.player_shoot_interval)
             {
                 shoot_timer = 0f;
                 Stage.getInstance().addElement(new Cloud(this, looking_at, getPosition().X, getPosition().Y));
