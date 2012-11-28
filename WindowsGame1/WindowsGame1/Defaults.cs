@@ -5,10 +5,12 @@ using System.Text;
 
 namespace WindowsGame1
 {
+    public enum Direction { NONE, LEFT, UP, DOWN, RIGHT};
+
     public class Defaults
     {
-        static public float player_speed_x = 5f;
-        static public float player_speed_y = 5f;
+        static public float player_speed_x = 3f;
+        static public float player_speed_y = 3f;
         static public int player_health = 100;
         static public int player_width = 32;
         static public int player_height = 32;

@@ -14,15 +14,15 @@ namespace WindowsGame1
 {
     class SpriteSheet
     {
-        float m_timer = 0f;
-        float m_interval = 100f;
-        int m_currentFrame = 7;
-        int m_spriteWidth = 25;
-        int m_spriteHeight = 35;
-        Rectangle m_sourceRect;
+        protected float m_timer = 0f;
+        protected float m_interval = 100f;
+        protected int m_currentFrame;
+        private int m_spriteWidth;
+        private int m_spriteHeight;
+        private Rectangle m_sourceRect;
 
-        KeyboardState m_currentState;
-        KeyboardState m_previousState;
+        protected KeyboardState m_currentState;
+        protected KeyboardState m_previousState;
 
         public SpriteSheet(int currentFrame, int spriteWidth, int spriteHeight)
         {
@@ -64,95 +64,9 @@ namespace WindowsGame1
             //    }
             //}
 
-        public void animateRight()
-        {
-            //Check if the keyboard state is a new one, if it is snap straight to the standing 
-            //frame for the direction. Allows quick turning
-            if (m_currentState != m_previousState)
-            {
-                m_currentFrame = 4;
-            }
-
-            //Check if timer is greater than interval
-            if (m_timer > m_interval)
-            {
-                //If is incrememnt current frame
-                m_currentFrame++;
-
-
-                //Check frame is within direction frames, if not set back to standing
-                if (m_currentFrame > 5)
-                {
-                    m_currentFrame = 3;
-                }
-
-                //Reset timer
-                m_timer = 0f;
-            }
-        }
-
         public void update(GameTime gameTime)
         {
-            //Incremement timer using paramater
             m_timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-        }
-
-        public void animateLeft()
-        {
-            if (m_currentState != m_previousState)
-            {
-                m_currentFrame = 7;
-            }
-
-            if (m_timer > m_interval)
-            {
-                m_currentFrame++;
-
-                if (m_currentFrame > 8)
-                {
-                    m_currentFrame = 6;
-                }
-                m_timer = 0f;
-            }
-        }
-
-        public void animateDown()
-        {
-            if (m_currentState != m_previousState)
-            {
-                m_currentFrame = 1;
-            }
-
-            if (m_timer > m_interval)
-            {
-                m_currentFrame++;
-
-                if (m_currentFrame > 2)
-                {
-                    m_currentFrame = 0;
-                }
-                m_timer = 0f;
-            }
-        }
-
-        public void animateUp()
-        {
-            //if (m_currentState != m_previousState)
-            if (m_currentFrame < 9)
-            {
-                m_currentFrame = 10;
-            }
-
-            if (m_timer > m_interval)
-            {
-                m_currentFrame++;
-
-                if (m_currentFrame > 11)
-                {
-                    m_currentFrame = 9;
-                }
-                m_timer = 0f;
-            }
         }
 
         public Rectangle SourceRect
