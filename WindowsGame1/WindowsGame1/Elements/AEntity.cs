@@ -5,11 +5,11 @@ using System.Text;
 
 namespace WindowsGame1
 {
-    public abstract class APlayer : AElement
+    public abstract class AEntity : AElement
     {
         protected int _health;
 
-        public APlayer(string texture_path, float posx, float posy, float speed, int health) :
+        public AEntity(string texture_path, float posx, float posy, float speed, int health) :
             base(EntityType.PLAYER, texture_path, posx, posy, speed)
         {
             _health = health;

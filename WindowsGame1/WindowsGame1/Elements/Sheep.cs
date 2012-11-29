@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace WindowsGame1
 {
-    public class Sheep : APlayer
+    public class Sheep : AEntity
     {
          public Sheep(float posx, float posy) :
             base(Defaults.sheep_texture_path, posx, posy, Defaults.sheep_speed, Defaults.sheep_health)

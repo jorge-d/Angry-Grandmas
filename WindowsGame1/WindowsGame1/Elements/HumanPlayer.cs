@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace WindowsGame1
 {
-    class HumanPlayer : APlayer
+    class HumanPlayer : AEntity
     {
         HumanSpriteAnimation sprite;
         protected float shoot_timer = 0f;
