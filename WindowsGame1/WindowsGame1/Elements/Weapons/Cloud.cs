@@ -61,13 +61,13 @@ namespace WindowsGame1
         public override bool update(GameTime gameTime)
         {
             sprite.update(gameTime);
-            sprite.animate();
+            sprite.animate(_direction);
             return move();
         }
 
         private class CloudSpriteAnimation : SpriteSheet
         {
-            private bool up = true;
+            private bool _up = true;
 
             public CloudSpriteAnimation() :
                 base(0, 0, 32, 32)
@@ -75,19 +75,19 @@ namespace WindowsGame1
                 m_interval /= 4;
             }
 
-            public void animate()
+            public override void animate(Direction Dir)
             {
                 if (isTimerElapsed())
                 {
-                    if (up)
+                    if (_up)
                         incrementY();
                     else
                         decrementY();
 
                     if (getY() >= 19)
-                        up = false;
+                        _up = false;
                     else if (getY() <= 0)
-                        up = true;
+                        _up = true;
 
                     resetTimer();
                 }
