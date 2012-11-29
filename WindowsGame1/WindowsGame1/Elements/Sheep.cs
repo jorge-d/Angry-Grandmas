@@ -10,7 +10,7 @@ namespace WindowsGame1
     public class Sheep : APlayer
     {
          public Sheep(float posx, float posy) :
-            base(Defaults.sheep_texture_path, posx, posy, Defaults.sheep_speed_x, Defaults.sheep_speed_y, Defaults.sheep_health)
+            base(Defaults.sheep_texture_path, posx, posy, Defaults.sheep_speed, Defaults.sheep_health)
         {
         }
 

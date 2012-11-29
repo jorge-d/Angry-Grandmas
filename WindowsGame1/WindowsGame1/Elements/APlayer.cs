@@ -9,8 +9,8 @@ namespace WindowsGame1
     {
         protected int _health;
 
-        public APlayer(string texture_path, float posx, float posy, float speed_x, float speed_y, int health) :
-            base(EntityType.PLAYER, texture_path, posx, posy, speed_x, speed_y)
+        public APlayer(string texture_path, float posx, float posy, float speed, int health) :
+            base(EntityType.PLAYER, texture_path, posx, posy, speed)
         {
             _health = health;
         }

@@ -12,7 +12,7 @@ namespace WindowsGame1
         CloudSpriteAnimation sprite;
 
         public Cloud(HumanPlayer shooter, Direction dir, float posx, float posy) :
-            base(shooter, dir, Defaults.cloud_damages, Defaults.cloud_texture, posx, posy, Defaults.cloud_speed, Defaults.cloud_speed)
+            base(shooter, dir, Defaults.cloud_damages, Defaults.cloud_texture, posx, posy, Defaults.cloud_speed)
         {
             Width = 32;
             Height = 32;

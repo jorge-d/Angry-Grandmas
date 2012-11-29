@@ -9,8 +9,7 @@ namespace WindowsGame1
 {
     public abstract class AElement
     {
-        protected float _speed_x;
-        protected float _speed_y;
+        protected float _speed;
 
         protected Texture2D _texture;
         private Vector2 _position;
@@ -26,11 +25,10 @@ namespace WindowsGame1
 
         static protected Game _game = Game1.getGameInstance();
 
-        public AElement(EntityType type, string texture_path, float posx, float posy, float speed_x, float speed_y)
+        public AElement(EntityType type, string texture_path, float posx, float posy, float speed)
         {
             _type = type;
-            _speed_x = speed_x;
-            _speed_y = speed_y;
+            _speed = speed;
             _texture = _game.Content.Load<Texture2D>(texture_path);
 
             Width = _texture.Width;

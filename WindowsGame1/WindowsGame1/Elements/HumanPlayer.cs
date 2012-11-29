@@ -15,7 +15,7 @@ namespace WindowsGame1
         protected float shoot_timer = 0f;
 
         public HumanPlayer(float posx, float posy) :
-            base(Defaults.human_texture_path, posx, posy, Defaults.player_speed_x, Defaults.player_speed_y, Defaults.player_health)
+            base(Defaults.human_texture_path, posx, posy, Defaults.player_speed, Defaults.player_health)
         {
             Width = Defaults.player_width;
             Height = Defaults.player_height;
@@ -67,22 +67,22 @@ namespace WindowsGame1
 
             if (kS.IsKeyDown(Keys.A))
             {
-                newX -= _speed_x;
+                newX -= _speed;
                 return Direction.LEFT;
             }
             else if (kS.IsKeyDown(Keys.D))
             {
-                newX += _speed_x;
+                newX += _speed;
                 return Direction.RIGHT;
             }
             else if (kS.IsKeyDown(Keys.W))
             {
-                newY -= _speed_y;
+                newY -= _speed;
                 return Direction.UP;
             }
             else if (kS.IsKeyDown(Keys.S))
             {
-                newY += _speed_y;
+                newY += _speed;
                 return Direction.DOWN;
             }
             return Direction.NONE;
@@ -123,97 +123,51 @@ namespace WindowsGame1
             {
                 _previous_state = _current_state;
 
+                // Avoid having a direction NONE because it could be harmfull
+                // when we try to know where he's looking
                 if (dir != Direction.NONE)
                     _current_state = dir;
+
+                // Avoid non-smooth transitions
+                if (_current_state != _previous_state)
+                    resetMovement();
 
                 switch (dir)
                 {
                     case Direction.LEFT:
-                        animateLeft();
+                        move(Defaults.MOUVEMENT_DIRECTION_LEFT);
                         break;
                     case Direction.RIGHT:
-                        animateRight();
+                        move(Defaults.MOUVEMENT_DIRECTION_RIGHT);
                         break;
                     case Direction.UP:
-                        animateUp();
+                        move(Defaults.MOUVEMENT_DIRECTION_UP);
                         break;
                     case Direction.DOWN:
-                        animateDown();
+                        move(Defaults.MOUVEMENT_DIRECTION_DOWN);
                         break;
                     default:
-                        finishCurrentMovment();
+                        resetMovement();
                         break;
                 }
             }
 
-            private void finishCurrentMovment()
+            private void resetMovement()
             {
-                if (getX() >= 0 && getX() <= 2)
-                    setX(1);
-                if (getX() >= 3 && getX() <= 5)
-                    setX(4);
-                if (getX() >= 6 && getX() <= 8)
-                    setX(7);
-                if (getX() >= 9 && getX() <= 11)
-                    setX(10);
+                setX(Defaults.MOUVEMENT_PHASE_MIDDLE);
             }
 
-            private void animateRight()
+            private void move(int y)
             {
-                if (_current_state != _previous_state)
-                    setX(4);
-
+                setY(y);
                 if (isTimerElapsed())
                 {
-                    incrementX();
                     resetTimer();
-                    if (getX() > 5)
-                        setX(3);
+                    incrementX();
+                    if (getX() > Defaults.MOUVEMENT_PHASE_END)
+                        setX(Defaults.MOUVEMENT_PHASE_BEGIN);
                 }
             }
-
-            private void animateLeft()
-            {
-                if (_current_state != _previous_state)
-                    setX(7);
-
-                if (isTimerElapsed())
-                {
-                    incrementX();
-                    resetTimer();
-                    if (getX() > 8)
-                        setX(6);
-                }
-            }
-
-            private void animateDown()
-            {
-                if (_current_state != _previous_state)
-                    setX(1);
-
-                if (isTimerElapsed())
-                {
-                    incrementX();
-                    resetTimer();
-                    if (getX() > 2)
-                        setX(0);
-                }
-            }
-
-            private void animateUp()
-            {
-                if (_current_state != _previous_state)
-                    setX(10);
-
-                if (isTimerElapsed())
-                {
-                    incrementX();
-                    resetTimer();
-                    if (getX() > 11)
-                        setX(9);
-                }
-            }
-
         }
     }
 }

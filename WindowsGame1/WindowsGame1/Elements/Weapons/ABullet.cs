@@ -12,10 +12,10 @@ namespace WindowsGame1
         protected int _damages;
         protected float _speed;
 
-        public ABullet(HumanPlayer shooter, Direction dir, int damages, string path, float posx, float posy, float speedx, float speedy) :
-            base(EntityType.BULLET, path, posx, posy, speedx, speedy)
+        public ABullet(HumanPlayer shooter, Direction dir, int damages, string path, float posx, float posy, float speed) :
+            base(EntityType.BULLET, path, posx, posy, speed)
         {
-            _speed = speedx;
+            _speed = speed;
             _damages = damages;
             _direction = dir;
             _player = shooter;
