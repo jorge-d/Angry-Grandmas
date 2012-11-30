@@ -36,8 +36,6 @@ namespace WindowsGame1
 
         private class ExplosionAnimation : SpriteSheet
         {
-            private bool _up = true;
-
             public ExplosionAnimation() :
                 base(-1, 0, 64, 64)
             {

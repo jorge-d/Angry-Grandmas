@@ -9,35 +9,14 @@ namespace WindowsGame1
 {
     class Stage
     {
-        static protected Game _game = Game1.getGameInstance();
+        static private Game _game = Game1.getGameInstance();
+        static private Stage _instance = null;
 
-        public int[,] level = new int[,]
-           {{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
-
-        LinkedList<AElement> _elements;
+        private LinkedList<AElement> _elements;
         private ElementGenerator generator = new ElementGenerator();
 
-        static Stage _instance = null;
+        public int[,] level = new int[Defaults.stage_square_nb_y, Defaults.stage_square_nb_x];
+
 
         static public Stage getInstance()
         {
@@ -46,10 +25,7 @@ namespace WindowsGame1
             return _instance;
         }
 
-        private Stage()
-        {
-            _elements = new LinkedList<AElement>();
-        }
+        private Stage() {}
 
         public void addElement(AElement elem)
         {
@@ -58,15 +34,18 @@ namespace WindowsGame1
 
         public bool init(int player_nb)
         {
+            level = generator.generateRandomWorld(player_nb);
+            _elements = new LinkedList<AElement>();
+
             for (int y = 0; y < level.GetLength(0); y++)
                 for (int x = 0; x < level.GetLength(1); x++)
                     switch (level[y, x])
                     {
-                        case 1:
-                            this.addElement(new Wall(32 * x, 32 * y));
+                        case (int)MapElements.WALL:
+                            this.addElement(new Wall(Defaults.stage_square_size * x, Defaults.stage_square_size * y));
                             break;
-                        case 2:
-                            this.addElement(new HumanPlayer(32 * x, 32 * y));
+                        case (int)MapElements.SPAWN:
+                            this.addElement(new HumanPlayer(Defaults.stage_square_size * x, Defaults.stage_square_size * y));
                             break;
                     }
             return true;

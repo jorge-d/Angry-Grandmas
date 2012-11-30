@@ -7,6 +7,7 @@ namespace WindowsGame1
 {
     public enum Direction { NONE, LEFT, UP, DOWN, RIGHT};
     public enum EntityType { WALL, PLAYER, BULLET, BONUS, EXPLOSION }
+    public enum MapElements { GRASS = 0, WALL, SPAWN, TREE }
 
     public class Defaults
     {
@@ -24,6 +25,9 @@ namespace WindowsGame1
 
         static public int window_size_x = 1024;
         static public int window_size_y = 768;
+        static public int stage_square_nb_x = 32;
+        static public int stage_square_nb_y = 20;
+        static public int stage_square_size = 32;
 
         static public string getSheepRandomTexture()
         {

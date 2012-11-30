@@ -32,7 +32,7 @@ namespace WindowsGame1
             while (true)
                 for (int y = 0; y < level.GetLength(0); y++)
                     for (int x = 0; x < level.GetLength(1); x++)
-                        if (level[y, x] != 1 && tmp++ >= nb)
+                        if (level[y, x] != (int)MapElements.WALL && tmp++ >= nb)
                         {
                             posx = x;
                             posy = y;
@@ -49,10 +49,28 @@ namespace WindowsGame1
                 int y;
 
                 findRandomSpot(out x, out y);
-                Stage.getInstance().addElement(new Sheep(32 * x, 32 * y));
+                Stage.getInstance().addElement(new Sheep(Defaults.stage_square_size * x, Defaults.stage_square_size * y));
                 resetSheepTimer();
             }
         }
 
+        public int[,] generateRandomWorld(int player_nb)
+        {
+            int[,] level = Stage.getInstance().level;
+            int posx;
+            int posy;
+            for (int y = 0; y < Defaults.stage_square_nb_y; y++)
+                for (int x = 0; x < Defaults.stage_square_nb_x; x++)
+                {
+                    if (y == 0 || (y + 1) == Defaults.stage_square_nb_y ||
+                        x == 0 || (x + 1) == Defaults.stage_square_nb_x)
+                        level[y, x] = (int)MapElements.WALL;
+                }
+
+            findRandomSpot(out posx, out posy);
+            level[posy, posx] = (int)MapElements.SPAWN;
+
+            return level;
+        }
     }
 }
