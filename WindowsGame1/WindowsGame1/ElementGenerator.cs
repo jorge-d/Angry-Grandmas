@@ -10,6 +10,7 @@ namespace WindowsGame1
     {
         private float _sheep_generation_interval = 3000f;
         private float _sheep_generation_timer = 0f;
+        Random r = new Random();
 
         private void resetSheepTimer()
         {
@@ -24,14 +25,12 @@ namespace WindowsGame1
         private void findRandomSpot(out int posx, out int posy)
         {
             int[,] level = Stage.getInstance().level;
-            Random r = new Random();
-
-            int nb = (r.Next() % (level.GetLength(0) * level.GetLength(1))) + 1;
+            int nb = (r.Next() % (Defaults.stage_square_nb_x * Defaults.stage_square_nb_y)) + 1;
             int tmp = 0;
 
             while (true)
-                for (int y = 0; y < level.GetLength(0); y++)
-                    for (int x = 0; x < level.GetLength(1); x++)
+                for (int y = 0; y < Defaults.stage_square_nb_y; y++)
+                    for (int x = 0; x < Defaults.stage_square_nb_x; x++)
                         if (level[y, x] != (int)MapElements.WALL && tmp++ >= nb)
                         {
                             posx = x;
@@ -69,6 +68,13 @@ namespace WindowsGame1
 
             findRandomSpot(out posx, out posy);
             level[posy, posx] = (int)MapElements.SPAWN;
+
+            level[10, 10] = (int)MapElements.TREE;
+            for (int i = 0; i < 30; i++)
+            {
+                findRandomSpot(out posx, out posy);
+                level[posy, posx] = (int)MapElements.TREE;
+            }
 
             return level;
         }

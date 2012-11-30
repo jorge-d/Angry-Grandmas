@@ -47,12 +47,12 @@ namespace WindowsGame1
 
             for (int y = 0; y < level.GetLength(0); y++)
                 for (int x = 0; x < level.GetLength(1); x++)
-                    switch (level[y, x])
+                    switch ((MapElements)level[y, x])
                     {
-                        case (int)MapElements.WALL:
+                        case MapElements.WALL:
                             this.addElement(new Wall(Defaults.stage_square_size * x, Defaults.stage_square_size * y));
                             break;
-                        case (int)MapElements.SPAWN:
+                        case MapElements.SPAWN:
                             this.addElement(new HumanPlayer(Defaults.stage_square_size * x, Defaults.stage_square_size * y));
                             break;
                     }
@@ -108,7 +108,7 @@ namespace WindowsGame1
                     break;
                 case MapElements.TREE:
                     sprite.setX(0);
-                    sprite.setY(24);
+                    sprite.setY(12);
                     break;
             }
             spriteBatch.Draw(_world_texture, pos, sprite.SourceRect, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0);
