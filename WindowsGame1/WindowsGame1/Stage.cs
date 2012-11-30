@@ -10,10 +10,8 @@ namespace WindowsGame1
     class Stage
     {
         static protected Game _game = Game1.getGameInstance();
-        private float _sheep_generation_interval = 3000f;
-        private float _sheep_generation_timer = 0f;
 
-        int[,] level = new int[,]
+        public int[,] level = new int[,]
            {{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
             {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
             {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -37,6 +35,7 @@ namespace WindowsGame1
             {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
 
         LinkedList<AElement> _elements;
+        private ElementGenerator generator = new ElementGenerator();
 
         static Stage _instance = null;
 
@@ -69,9 +68,6 @@ namespace WindowsGame1
                         case 2:
                             this.addElement(new HumanPlayer(32 * x, 32 * y));
                             break;
-                        case 3:
-                            this.addElement(new Sheep(32 * x, 32 * y));
-                            break;
                     }
             return true;
         }
@@ -85,45 +81,10 @@ namespace WindowsGame1
                 if (!element.update(gametime))
                     _elements.Remove(element);
             }
-            generateSheeps(gametime);
+            generator.update(gametime);
             return 0;
         }
 
-        private void resetSheepTimer()
-        {
-            _sheep_generation_timer = 0f;
-        }
-
-        private void findRandomSpot(out int posx, out int posy)
-        {
-            Random r = new Random();
-            int nb = (r.Next() % (level.GetLength(0) * level.GetLength(1))) + 1;
-            int tmp = 0;
-
-            while (true)
-                for (int y = 0; y < level.GetLength(0); y++)
-                    for (int x = 0; x < level.GetLength(1); x++)
-                        if (level[y, x] != 1 && tmp++ >= nb)
-                        {
-                            posx = x;
-                            posy = y;
-                            return;
-                        }
-        }
-
-        private void generateSheeps(GameTime gameTime)
-        {
-            _sheep_generation_timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (_sheep_generation_timer > _sheep_generation_interval)
-            {
-                int x;
-                int y;
-
-                findRandomSpot(out x, out y);
-                addElement(new Sheep(32 * x, 32 * y));
-                resetSheepTimer();
-            }
-        }
 
         public void getIntersections(Rectangle rec, ref LinkedList<AElement> ret)
         {

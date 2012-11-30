@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ElementGenerator.cs" />
     <Compile Include="Elements\AElement.cs" />
     <Compile Include="Elements\AEntity.cs" />
     <Compile Include="Defaults.cs" />
