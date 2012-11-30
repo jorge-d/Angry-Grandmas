@@ -36,7 +36,6 @@ namespace WindowsGame1
                 sprite.animate(_dir);
                 moveSheep();
             }
-
             return isAlive();
         }
 

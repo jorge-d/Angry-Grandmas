@@ -24,45 +24,13 @@ namespace WindowsGame1
             spriteBatch.Draw(_texture, getPosition(), sprite.SourceRect, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0);
         }
 
-        private bool move()
-        {
-            Vector2 pos = getPosition();
-            float x = pos.X;
-            float y = pos.Y;
-            switch (_direction)
-            {
-                case Direction.UP:
-                    y -= _speed;
-                    break;
-                case Direction.DOWN:
-                    y += _speed;
-                    break;
-                case Direction.LEFT:
-                    x -= _speed;
-                    break;
-                case Direction.RIGHT:
-                    x += _speed;
-                    break;
-            }
-            setPosition(x, y);
-
-            LinkedList<AElement> elements = new LinkedList<AElement>();
-            Stage.getInstance().getIntersections(new Rectangle((int)x, (int)y, Width, Height), ref elements);
-            foreach (AElement elem in elements)
-                if (elem != this)
-                {
-                    EntityType type = elem.GetElementType();
-                    if (type == EntityType.WALL)
-                        return false;
-                }
-            return true;
-        }
-
         public override bool update(GameTime gameTime)
         {
+            if (hitsPlayer())
+                return false;
             sprite.update(gameTime);
             sprite.animate(_direction);
-            return move();
+            return move(_direction);
         }
 
         private class CloudSpriteAnimation : SpriteSheet

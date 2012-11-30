@@ -10,9 +10,9 @@ namespace WindowsGame1
 
     public class Defaults
     {
-        static public float entity_movement_interval = 20f;
+        static public float entity_movement_interval = 10f;
 
-        static public float player_speed = 3f;
+        static public float player_speed = 2f;
         static public int player_health = 100;
         static public int player_width = 32;
         static public int player_height = 32;
@@ -26,7 +26,7 @@ namespace WindowsGame1
         static public string sheep_texture_path = @"Images/white_sheep";
         static public string human_texture_path = @"Images/hero";
 
-        static public float sheep_speed = 2f;
+        static public float sheep_speed = 0.5f;
         static public int sheep_health = 10;
 
         static public int cloud_damages = 2;

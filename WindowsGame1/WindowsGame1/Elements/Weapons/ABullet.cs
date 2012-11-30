@@ -19,5 +19,24 @@ namespace WindowsGame1
             _direction = dir;
             _player = shooter;
         }
+
+        protected override bool move(float x, float y)
+        {
+            if (!canMove((int)x, (int)y))
+                return false;
+            setPosition(x, y);
+            return true;
+        }
+
+        protected bool hitsPlayer()
+        {
+            foreach (AElement elem in getOverlapingElements())
+                if (elem.GetElementType() == EntityType.PLAYER && elem != _player)
+                {
+                    ((AEntity)elem).hurt(_damages);
+                    return true;
+                }
+            return false;
+        }
     }
 }

@@ -79,5 +79,65 @@ namespace WindowsGame1
                 return max;
             return value;
         }
+
+        protected bool canMove(Direction dir)
+        {
+            switch (dir)
+            {
+                case Direction.LEFT:
+                    return canMove((int)(getPosition().X - _speed), (int)getPosition().Y);
+                case Direction.RIGHT:
+                    return canMove((int)(getPosition().X + _speed), (int)getPosition().Y);
+                case Direction.UP:
+                    return canMove((int)getPosition().X, (int)(getPosition().Y - _speed));
+                case Direction.DOWN:
+                    return canMove((int)getPosition().X, (int)(getPosition().Y - _speed));
+                default:
+                    throw new ArgumentException();
+            }
+        }
+
+        protected virtual bool move(float x, float y) { throw new NotImplementedException(); } 
+
+        protected bool move(Direction dir)
+        {
+            switch (dir)
+            {
+                case Direction.LEFT:
+                    return move(getPosition().X - _speed, getPosition().Y);
+                case Direction.RIGHT:
+                    return move(getPosition().X + _speed, getPosition().Y);
+                case Direction.UP:
+                    return move(getPosition().X, getPosition().Y - _speed);
+                case Direction.DOWN:
+                    return move(getPosition().X, getPosition().Y + _speed);
+                default:
+                    throw new ArgumentException();
+            }
+        }
+
+        protected LinkedList<AElement> getOverlapingElements()
+        {
+            return getOverlapingElements((int)getPosition().X, (int)getPosition().Y);
+        }
+
+        protected LinkedList<AElement> getOverlapingElements(int x, int y)
+        {
+            LinkedList<AElement> elements = new LinkedList<AElement>();
+            Stage.getInstance().getIntersections(new Rectangle(x, y, Width, Height), ref elements);
+            return elements;
+        }
+
+        protected bool canMove(int x, int y)
+        {
+            foreach (AElement elem in getOverlapingElements(x, y))
+                if (elem != this)
+                {
+                    EntityType type = elem.GetElementType();
+                    if (type == EntityType.WALL)
+                        return false;
+                }
+            return true;
+        }
     }
 }
