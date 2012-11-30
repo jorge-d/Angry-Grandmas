@@ -37,11 +37,7 @@ namespace WindowsGame1
                 moveSheep();
             }
 
-            // Debug to remove
-            KeyboardState kS = Keyboard.GetState();
-            if (kS.IsKeyDown(Keys.Q))
-                return false;
-            return true;
+            return isAlive();
         }
 
         private bool moveSheep()

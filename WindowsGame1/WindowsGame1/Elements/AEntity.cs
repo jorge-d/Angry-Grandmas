@@ -32,6 +32,13 @@ namespace WindowsGame1
             return true;
         }
 
+        protected bool isAlive()
+        {
+            if (_health <= 0)
+                return false;
+            return true;
+        }
+
         protected bool isMoveTimerElapsed()
         {
             return (_move_timer > _move_interval);
