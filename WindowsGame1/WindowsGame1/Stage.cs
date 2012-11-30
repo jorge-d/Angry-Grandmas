@@ -56,10 +56,8 @@ namespace WindowsGame1
             LinkedList<AElement> elements = new LinkedList<AElement>(_elements);
 
             foreach (AElement element in elements)
-            {
                 if (!element.update(gametime))
                     _elements.Remove(element);
-            }
             generator.update(gametime);
             return 0;
         }
@@ -68,10 +66,8 @@ namespace WindowsGame1
         public void getIntersections(Rectangle rec, ref LinkedList<AElement> ret)
         {
             foreach (AElement element in _elements)
-            {
                 if (element.getObjectRectangle().Intersects(rec))
                     ret.AddLast(element);
-            }
         }
 
         public void draw(SpriteBatch spriteBatch)
