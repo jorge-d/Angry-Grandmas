@@ -23,10 +23,17 @@ namespace WindowsGame1
         static public int window_size_x = 1024;
         static public int window_size_y = 768;
 
+        static public string getSheepTexture()
+        {
+            Random r = new Random();
+            if (r.Next() % 2 == 0)
+                return @"Images/white_sheep";
+            return @"Images/black_sheep";
+        }
         static public string sheep_texture_path = @"Images/white_sheep";
         static public string human_texture_path = @"Images/hero";
 
-        static public float sheep_speed = 0.5f;
+        static public float sheep_speed = 1f;
         static public int sheep_health = 10;
 
         static public int cloud_damages = 2;
