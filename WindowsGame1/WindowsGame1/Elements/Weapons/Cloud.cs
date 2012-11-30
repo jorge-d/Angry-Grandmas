@@ -12,7 +12,7 @@ namespace WindowsGame1
         CloudSpriteAnimation sprite;
 
         public Cloud(HumanPlayer shooter, Direction dir, float posx, float posy) :
-            base(shooter, dir, Defaults.cloud_damages, Defaults.cloud_texture, posx, posy, Defaults.cloud_speed)
+            base(shooter, dir, Defaults.cloud_damages, Defaults.cloud_texture_path, posx, posy, Defaults.cloud_speed)
         {
             Width = 32;
             Height = 32;
@@ -30,7 +30,12 @@ namespace WindowsGame1
                 return false;
             sprite.update(gameTime);
             sprite.animate(_direction);
-            return move(_direction);
+            if (!move(_direction))
+            {
+                createExplosion();
+                return false;
+            }
+            return true;
         }
 
         private class CloudSpriteAnimation : SpriteSheet

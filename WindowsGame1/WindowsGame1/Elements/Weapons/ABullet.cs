@@ -10,6 +10,7 @@ namespace WindowsGame1
         protected HumanPlayer _player;
         protected Direction _direction;
         protected int _damages;
+        protected float _explosion_scale = 0.5f;
 
         public ABullet(HumanPlayer shooter, Direction dir, int damages, string path, float posx, float posy, float speed) :
             base(EntityType.BULLET, path, posx, posy, speed)
@@ -34,9 +35,32 @@ namespace WindowsGame1
                 if (elem.GetElementType() == EntityType.PLAYER && elem != _player)
                 {
                     ((AEntity)elem).hurt(_damages);
+                    createExplosion();
                     return true;
                 }
             return false;
+        }
+
+        protected void createExplosion()
+        {
+            float x = getPosition().X;
+            float y = getPosition().Y;
+            switch (_direction)
+            {
+                case Direction.LEFT:
+                    x -= Width / 2;
+                    break;
+                case Direction.RIGHT:
+                    x += Width / 2;
+                    break;
+                case Direction.UP:
+                    y -= Width / 2;
+                    break;
+                case Direction.DOWN:
+                    y += Width / 2;
+                    break;
+            }
+            Stage.getInstance().addElement(new Explosion(x, y, _explosion_scale));
         }
     }
 }

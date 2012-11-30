@@ -13,7 +13,7 @@ namespace WindowsGame1
         Direction _dir;
 
          public Sheep(float posx, float posy) :
-            base(Defaults.getSheepTexture(), posx, posy, Defaults.sheep_speed, Defaults.sheep_health)
+            base(Defaults.getSheepRandomTexture(), posx, posy, Defaults.sheep_speed, Defaults.sheep_health)
         {
             Width = 32;
             Height = 31;
