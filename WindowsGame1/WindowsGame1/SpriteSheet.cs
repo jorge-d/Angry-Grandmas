@@ -92,12 +92,12 @@ namespace WindowsGame1
             m_sourceRect = new Rectangle(x * m_spriteWidth, y * m_spriteHeight, m_spriteWidth, m_spriteHeight);
         }
 
-        protected int getX() { return x; }
-        protected int getY() { return y; }
-        protected void setX(int frame_x) { x = frame_x; }
+        public int getX() { return x; }
+        public int getY() { return y; }
+        public void setX(int frame_x) { x = frame_x; }
         protected void incrementX() { x++; }
         protected void decrementX() { x--; }
-        protected void setY(int frame_y) { y = frame_y; }
+        public void setY(int frame_y) { y = frame_y; }
         protected void incrementY() { y++; }
         protected void decrementY() { y--; }
         protected void resetTimer() { m_timer = 0f; }

@@ -14,9 +14,10 @@ namespace WindowsGame1
 
         private LinkedList<AElement> _elements;
         private ElementGenerator generator = new ElementGenerator();
+        private Texture2D _world_texture = null;
+        private SpriteSheet sprite = new SpriteSheet(0, 0, Defaults.stage_square_size, Defaults.stage_square_size);
 
         public int[,] level = new int[Defaults.stage_square_nb_y, Defaults.stage_square_nb_x];
-
 
         static public Stage getInstance()
         {
@@ -25,15 +26,22 @@ namespace WindowsGame1
             return _instance;
         }
 
-        private Stage() {}
+        private Stage() { }
 
         public void addElement(AElement elem)
         {
             _elements.AddLast(elem);
         }
 
+        private void loadTexture()
+        {
+            if (_world_texture == null)
+                _world_texture = _game.Content.Load<Texture2D>(Defaults.world_texture_path);
+        }
+
         public bool init(int player_nb)
         {
+            loadTexture();
             level = generator.generateRandomWorld(player_nb);
             _elements = new LinkedList<AElement>();
 
@@ -72,9 +80,38 @@ namespace WindowsGame1
 
         public void draw(SpriteBatch spriteBatch)
         {
+            renderMap(spriteBatch);
             foreach (AElement element in _elements)
                 element.draw(spriteBatch);
         }
 
+        private void renderMap(SpriteBatch spriteBatch)
+        {
+            for (int y = 0; y < level.GetLength(0); y++)
+                for (int x = 0; x < level.GetLength(1); x++)
+                    drawElement(spriteBatch, (MapElements)level[y, x], x * Defaults.stage_square_size, y * Defaults.stage_square_size);
+        }
+
+        public void drawElement(SpriteBatch spriteBatch, MapElements type, int x, int y)
+        {
+            Vector2 pos = new Vector2(x, y);
+            switch (type)
+            {
+                case MapElements.SPAWN:
+                case MapElements.GRASS:
+                    sprite.setX(1);
+                    sprite.setY(8);
+                    break;
+                case MapElements.WALL:
+                    sprite.setX(16);
+                    sprite.setY(2);
+                    break;
+                case MapElements.TREE:
+                    sprite.setX(0);
+                    sprite.setY(24);
+                    break;
+            }
+            spriteBatch.Draw(_world_texture, pos, sprite.SourceRect, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0);
+        }
     }
 }

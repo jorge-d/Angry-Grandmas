@@ -16,7 +16,7 @@ namespace WindowsGame1
 
         protected Rectangle _rectangle;
 
-        protected Color _color;
+        protected Color _color = Color.White;
 
         protected int Width { set; get; }
         protected int Height { set; get; }
@@ -33,8 +33,15 @@ namespace WindowsGame1
 
             Width = _texture.Width;
             Height = _texture.Height;
-            _color = Color.White;
             _position = new Vector2(posx, posy);
+        }
+
+        public AElement(EntityType type, float posx, float posy)
+        {
+            Width = Defaults.stage_square_size;
+            Height = Defaults.stage_square_size;
+            _position = new Vector2(posx, posy);
+            _type = type;
         }
 
         public EntityType GetElementType()
