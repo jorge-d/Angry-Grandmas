@@ -12,7 +12,7 @@ using System.Diagnostics;
 
 namespace WindowsGame1
 {
-    class SpriteSheet
+    public class SpriteSheet
     {
         protected float m_timer = 0f;
         protected float m_interval = Defaults.animation_movement_interval;

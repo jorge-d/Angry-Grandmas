@@ -11,7 +11,6 @@ namespace WindowsGame1
 {
     class HumanPlayer : AEntity
     {
-        SpriteSheet sprite;
         protected float shoot_timer = 0f;
 
         public HumanPlayer(float posx, float posy) :
@@ -24,27 +23,8 @@ namespace WindowsGame1
 
         public override bool update(GameTime gameTime)
         {
-            sprite.update(gameTime);
+            base.update(gameTime);
             updateUsingKeyboard(gameTime);
-            return true;
-        }
-
-        public override void draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(_texture, getPosition(), sprite.SourceRect, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0);
-        }
-
-        private bool canMove(int x, int y)
-        {
-            LinkedList<AElement> elements = new LinkedList<AElement>();
-            Stage.getInstance().getIntersections(new Rectangle(x, y, Width, Height), ref elements);
-            foreach (AElement elem in elements)
-                if (elem != this)
-                {
-                    EntityType type = elem.GetElementType();
-                    if (type == EntityType.WALL)
-                        return false;
-                }
             return true;
         }
 
@@ -60,29 +40,29 @@ namespace WindowsGame1
             }
         }
 
-        private Direction moveUsingKeyboard(KeyboardState kS, ref float newX, ref float newY)
+        private Direction moveUsingKeyboard(KeyboardState kS)
         {
             if (kS.IsKeyDown(Keys.P))
                 _game.Exit();
 
             if (kS.IsKeyDown(Keys.A))
             {
-                newX -= _speed;
+                move(Direction.LEFT);
                 return Direction.LEFT;
             }
             else if (kS.IsKeyDown(Keys.D))
             {
-                newX += _speed;
+                move(Direction.RIGHT);
                 return Direction.RIGHT;
             }
             else if (kS.IsKeyDown(Keys.W))
             {
-                newY -= _speed;
+                move(Direction.UP);
                 return Direction.UP;
             }
             else if (kS.IsKeyDown(Keys.S))
             {
-                newY += _speed;
+                move(Direction.DOWN);
                 return Direction.DOWN;
             }
             return Direction.NONE;
@@ -91,17 +71,12 @@ namespace WindowsGame1
         private void updateUsingKeyboard(GameTime gameTime)
         {
             KeyboardState kS = Keyboard.GetState();
-            Vector2 pos = getPosition();
-
-            float newX = pos.X;
-            float newY = pos.Y;
-
-            Direction dir = moveUsingKeyboard(kS, ref newX, ref newY);
-            sprite.animate(dir);
+            if (isMoveTimerElapsed())
+            {
+                Direction dir = moveUsingKeyboard(kS);
+                sprite.animate(dir);
+            }
             shoot(gameTime, kS);
-
-            if (canMove((int)newX, (int)newY))
-                this.setPosition(newX, newY);
         }
     }
 }

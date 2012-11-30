@@ -10,6 +10,8 @@ namespace WindowsGame1
 
     public class Defaults
     {
+        static public float entity_movement_interval = 20f;
+
         static public float player_speed = 3f;
         static public int player_health = 100;
         static public int player_width = 32;
