@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace WindowsGame1
 {
-    class Stage
+    public class Stage
     {
         static private Game _game = Game1.getGameInstance();
         static private Stage _instance = null;
@@ -92,6 +92,13 @@ namespace WindowsGame1
                     drawElement(spriteBatch, (MapElements)level[y, x], x * Defaults.stage_square_size, y * Defaults.stage_square_size);
         }
 
+        public void drawElement(SpriteBatch spriteBatch, Vector2 pos, int x, int y)
+        {
+            sprite.setX(x);
+            sprite.setY(y);
+            spriteBatch.Draw(_world_texture, pos, sprite.SourceRect, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0);
+        }
+
         public void drawElement(SpriteBatch spriteBatch, MapElements type, int x, int y)
         {
             Vector2 pos = new Vector2(x, y);
@@ -101,10 +108,6 @@ namespace WindowsGame1
                 case MapElements.GRASS:
                     sprite.setX(1);
                     sprite.setY(8);
-                    break;
-                case MapElements.WALL:
-                    sprite.setX(16);
-                    sprite.setY(2);
                     break;
                 case MapElements.TREE:
                     sprite.setX(0);

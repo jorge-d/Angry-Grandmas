@@ -10,6 +10,7 @@ namespace WindowsGame1
     public abstract class AElement
     {
         protected float _speed;
+        static protected Stage _stage = Stage.getInstance();
 
         protected Texture2D _texture;
         private Vector2 _position;

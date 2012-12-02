@@ -12,11 +12,12 @@ namespace WindowsGame1
         public Wall(float posx, float posy) :
             base(EntityType.WALL, posx, posy)
         {
+            _stage = Stage.getInstance();
         }
 
         public override void draw(SpriteBatch batch)
         {
-            // DO NOTHING HERE
+            _stage.drawElement(batch, getPosition(), 21, 3); 
         }
 
         public override bool update(GameTime gameTime)
