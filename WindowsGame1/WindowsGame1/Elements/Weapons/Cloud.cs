@@ -14,8 +14,8 @@ namespace WindowsGame1
         public Cloud(HumanPlayer shooter, Direction dir, float posx, float posy) :
             base(shooter, dir, Defaults.cloud_damages, Defaults.cloud_texture_path, posx, posy, Defaults.cloud_speed)
         {
-            Width = 32;
-            Height = 32;
+            Width = 25;
+            Height = 25;
             sprite = new CloudSpriteAnimation();
         }
 
@@ -43,7 +43,7 @@ namespace WindowsGame1
             private bool _up = true;
 
             public CloudSpriteAnimation() :
-                base(0, 0, 32, 32)
+                base(0, 0, 25, 25)
             {
                 m_interval /= 4;
             }
