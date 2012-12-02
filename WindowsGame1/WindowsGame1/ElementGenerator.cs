@@ -55,19 +55,35 @@ namespace WindowsGame1
 
         public int[,] generateRandomWorld(int player_nb)
         {
+            Stage stage = Stage.getInstance();
             int[,] level = Stage.getInstance().level;
             int posx;
             int posy;
+
             for (int y = 0; y < Defaults.stage_square_nb_y; y++)
                 for (int x = 0; x < Defaults.stage_square_nb_x; x++)
                 {
-                    if (y == 0 || (y + 1) == Defaults.stage_square_nb_y ||
-                        x == 0 || (x + 1) == Defaults.stage_square_nb_x)
-                        level[y, x] = (int)MapElements.WALL;
+                    posx = Defaults.stage_square_size * x;
+                    posy = Defaults.stage_square_size * y;
+                    if ((x == 0 || ((x + 1) == Defaults.stage_square_nb_x)) &&
+                        (y == 0 || ((y + 1) == Defaults.stage_square_nb_y)))
+                        stage.addElement(new Wall(posx, posy, Direction.NONE));
+                    else if (x == 0)
+                        stage.addElement(new Wall(posx, posy, Direction.LEFT));
+                    else if ((x + 1) == Defaults.stage_square_nb_x)
+                        stage.addElement(new Wall(posx, posy, Direction.RIGHT));
+                    else if (y == 0)
+                        stage.addElement(new Wall(posx, posy, Direction.UP));
+                    else if ((y + 1) == Defaults.stage_square_nb_y)
+                        stage.addElement(new Wall(posx, posy, Direction.DOWN));
+                    else
+                        continue;
+                    level[y, x] = (int)MapElements.WALL;
                 }
 
             findRandomSpot(out posx, out posy);
             level[posy, posx] = (int)MapElements.SPAWN;
+            stage.addElement(new HumanPlayer(posx * Defaults.stage_square_size, posy * Defaults.stage_square_size));
 
             level[10, 10] = (int)MapElements.TREE;
             for (int i = 0; i < 30; i++)

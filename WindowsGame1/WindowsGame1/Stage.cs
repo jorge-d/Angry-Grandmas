@@ -42,20 +42,8 @@ namespace WindowsGame1
         public bool init(int player_nb)
         {
             loadTexture();
-            level = generator.generateRandomWorld(player_nb);
             _elements = new LinkedList<AElement>();
-
-            for (int y = 0; y < level.GetLength(0); y++)
-                for (int x = 0; x < level.GetLength(1); x++)
-                    switch ((MapElements)level[y, x])
-                    {
-                        case MapElements.WALL:
-                            this.addElement(new Wall(Defaults.stage_square_size * x, Defaults.stage_square_size * y));
-                            break;
-                        case MapElements.SPAWN:
-                            this.addElement(new HumanPlayer(Defaults.stage_square_size * x, Defaults.stage_square_size * y));
-                            break;
-                    }
+            level = generator.generateRandomWorld(player_nb);
             return true;
         }
 
