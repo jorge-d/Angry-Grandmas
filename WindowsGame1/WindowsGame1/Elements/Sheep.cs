@@ -32,15 +32,19 @@ namespace WindowsGame1
             base.update(gameTime);
 
             if (isMoveTimerElapsed())
-            {
-                sprite.animate(_dir);
                 moveSheep();
+
+            if (!isAlive())
+            {
+                _stage.addElement(new Blood(getPosition().X, getPosition().Y));
+                return false;
             }
-            return isAlive();
+            return true;
         }
 
         private bool moveSheep()
         {
+            sprite.animate(_dir);
             if (!move(_dir))
                 pickRandomDirection();
             return true;
