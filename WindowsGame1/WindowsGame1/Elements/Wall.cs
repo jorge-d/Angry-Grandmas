@@ -9,12 +9,9 @@ namespace WindowsGame1
 {
     public class Wall : AElement
     {
-        private Direction _direction;
-
         public Wall(float posx, float posy, Direction dir) :
             base(EntityType.WALL, posx, posy)
         {
-            _stage = Stage.getInstance();
             _direction = dir;
         }
 

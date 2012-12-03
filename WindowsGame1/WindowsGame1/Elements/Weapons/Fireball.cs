@@ -9,29 +9,24 @@ namespace WindowsGame1
 {
     class Fireball : ABullet 
     {
-        SpriteSheet sprite;
-
         public Fireball(HumanPlayer shooter, Direction dir, float posx, float posy) :
-            base(shooter, dir, Defaults.fireball_damages, Defaults.fireball_texture_path, posx, posy, Defaults.fireball_speed)
+            base(shooter, dir, 32, 32, Defaults.fireball_damages, Defaults.fireball_texture_path, posx, posy, Defaults.fireball_speed)
         {
-            Width = 32;
-            Height = 32;
-            sprite = new SpriteSheet(Defaults.MOUVEMENT_PHASE_MIDDLE, Defaults.MOUVEMENT_DIRECTION_DOWN, Width, Height);
         }
         
         public override bool update(GameTime gameTime)
         {
-            hitsPlayer();
-            sprite.update(gameTime);
-            return move();
+            base.update(gameTime);
+
+            if (isMoveTimerElapsed())
+            {
+                hitsPlayer();
+                return move();
+            }
+            return true;
         }
 
-        public override void draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(_texture, getPosition(), sprite.SourceRect, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0);
-        }
-
-        private bool move()
+        protected bool move()
         {
             sprite.animate(_direction);
             if (!move(_direction))

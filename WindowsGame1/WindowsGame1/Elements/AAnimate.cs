@@ -13,7 +13,6 @@ namespace WindowsGame1
         protected float _move_interval = Defaults.entity_movement_interval;
         protected SpriteSheet sprite;
         protected float _scale = 1f;
-        protected Direction _direction;
 
         public AAnimate(EntityType type, string texture_path, int width, int height, float posx, float posy, float speed) :
             base(type, texture_path, posx, posy, speed)
@@ -27,6 +26,8 @@ namespace WindowsGame1
             base(type, texture_path, posx, posy, speed)
         {
             sprite = sp;
+            Width = sp.getWidth();
+            Height = sp.getHeight();
         }
 
         public override void draw(SpriteBatch spriteBatch)

@@ -34,6 +34,9 @@ namespace WindowsGame1
             y = frame_y;
         }
 
+        public int getWidth() { return m_spriteWidth; }
+        public int getHeight() { return m_spriteHeight; }
+
         public virtual void animate(Direction dir)
         {
             _previous_state = _current_state;

@@ -10,7 +10,7 @@ namespace WindowsGame1
 {
     public class Sheep : AEntity
     {
-        Direction _dir;
+        static private Random r = new Random();
 
          public Sheep(float posx, float posy) :
             base(Defaults.getSheepRandomTexture(), 32, 31,  posx, posy, Defaults.sheep_speed, Defaults.sheep_health)
@@ -20,8 +20,7 @@ namespace WindowsGame1
 
          private void pickRandomDirection()
          {
-             Random r = new Random();
-             _dir = (Direction)r.Next(4) + 1;
+             _direction = (Direction)r.Next(4) + 1;
          }
 
         public override bool update(GameTime gameTime)
@@ -41,8 +40,8 @@ namespace WindowsGame1
 
         private bool moveSheep()
         {
-            sprite.animate(_dir);
-            if (!move(_dir))
+            sprite.animate(_direction);
+            if (!move(_direction))
                 pickRandomDirection();
             return true;
         }

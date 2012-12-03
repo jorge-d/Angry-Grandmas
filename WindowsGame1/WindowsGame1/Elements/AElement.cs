@@ -15,6 +15,7 @@ namespace WindowsGame1
         protected Texture2D _texture;
         private Vector2 _position;
 
+        protected Direction _direction = Direction.NONE;
         protected Rectangle _rectangle;
 
         protected Color _color = Color.White;

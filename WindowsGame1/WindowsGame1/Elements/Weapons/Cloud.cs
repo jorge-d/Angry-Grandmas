@@ -9,33 +9,21 @@ namespace WindowsGame1
 {
     class Cloud : ABullet
     {
-        CloudAnimation sprite;
-
         public Cloud(HumanPlayer shooter, Direction dir, float posx, float posy) :
-            base(shooter, dir, Defaults.cloud_damages, Defaults.cloud_texture_path, posx, posy, Defaults.cloud_speed)
+            base(new CloudAnimation(), shooter, dir, Defaults.cloud_damages, Defaults.cloud_texture_path, posx, posy, Defaults.cloud_speed)
         {
-            Width = 25;
-            Height = 25;
-            sprite = new CloudAnimation();
-        }
-
-        public override void draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(_texture, getPosition(), sprite.SourceRect, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0);
         }
 
         public override bool update(GameTime gameTime)
         {
-            if (hitsPlayer())
-                return false;
-            sprite.update(gameTime);
+            base.update(gameTime);
             sprite.animate(_direction);
+
             if (!move(_direction))
-            {
                 createExplosion();
-                return false;
-            }
-            return true;
+            else if (!hitsPlayer())
+              return true;
+            return false;
         }
 
         protected class CloudAnimation : SpriteSheet
@@ -45,7 +33,6 @@ namespace WindowsGame1
             public CloudAnimation() :
                 base(0, 0, 25, 25)
             {
-                m_interval /= 4;
             }
 
             public override void animate(Direction Dir)
