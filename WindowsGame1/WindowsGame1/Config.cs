@@ -16,7 +16,8 @@ namespace WindowsGame1
         static public int player_width = 32;
         static public int player_height = 32;
 
-        static public float player_shoot_interval = 200f;
+        static public float cloud_shoot_interval = 200f;
+        static public float fireball_shoot_interval = 1000f;
         static public float entity_movement_interval = 15f;
         static public float explosion_animation_interval = 20f;
         static public float blood_animation_interval = 40f;
@@ -39,6 +40,7 @@ namespace WindowsGame1
         static public string sheep_texture_path = @"Images/white_sheep";
         static public string human_texture_path = @"Images/hero2";
         static public string cloud_texture_path = @"Images/cloud";
+        static public string fireball_texture_path = @"Images/fireball";
         static public string explosion_texture_path = @"Images/explosion";
         static public string world_texture_path = @"Images/world_elements";
         static public string blood_texture_path = @"Images/blood";
@@ -46,7 +48,9 @@ namespace WindowsGame1
         static public float sheep_speed = 1f;
         static public int sheep_health = 10;
         static public int cloud_damages = 2;
+        static public int fireball_damages = 20;
         static public float cloud_speed = 4f;
+        static public float fireball_speed = 2f;
 
         public static int MOUVEMENT_DIRECTION_DOWN = 0;
         public static int MOUVEMENT_DIRECTION_LEFT = 1;

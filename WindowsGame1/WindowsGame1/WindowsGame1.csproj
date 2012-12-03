@@ -111,7 +111,7 @@
     <Compile Include="ElementGenerator.cs" />
     <Compile Include="Elements\AElement.cs" />
     <Compile Include="Elements\AEntity.cs" />
-    <Compile Include="Defaults.cs" />
+    <Compile Include="Config.cs" />
     <Compile Include="Elements\Weapons\ABullet.cs" />
     <Compile Include="Elements\Weapons\Cloud.cs" />
     <Compile Include="Elements\HumanPlayer.cs" />

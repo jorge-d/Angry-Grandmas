@@ -28,15 +28,21 @@ namespace WindowsGame1
             return true;
         }
 
+        private bool isShootTimerElapsed()
+        {
+            return (shoot_timer > Defaults.cloud_shoot_interval);
+        }
+
         private void shoot(GameTime gameTime, KeyboardState kS)
         {
             shoot_timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             Direction looking_at = sprite.getLookingDirection();
 
-            if (kS.IsKeyDown(Keys.Space) && shoot_timer > Defaults.player_shoot_interval)
+            if (kS.IsKeyDown(Keys.Space) && isShootTimerElapsed())
             {
                 shoot_timer = 0f;
-                Stage.getInstance().addElement(new Cloud(this, looking_at, getPosition().X, getPosition().Y));
+//                Stage.getInstance().addElement(new Cloud(this, looking_at, getPosition().X, getPosition().Y));
+                Stage.getInstance().addElement(new Fireball(this, looking_at, getPosition().X, getPosition().Y));
             }
         }
 
