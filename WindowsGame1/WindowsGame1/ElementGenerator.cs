@@ -8,7 +8,6 @@ namespace WindowsGame1
 {
     class ElementGenerator
     {
-        private float _sheep_generation_interval = 3000f;
         private float _sheep_generation_timer = 0f;
         Random r = new Random();
         private Stage _stage = Stage.getInstance();
@@ -41,12 +40,12 @@ namespace WindowsGame1
 
         private void findRandomSpotBig(out int posx, out int posy)
         {
-            int nb = r.Next(Defaults.stage_square_nb_x * Defaults.stage_square_nb_y) + 50;
+            int nb = r.Next(Defaults.stage_square_nb_x * Defaults.stage_square_nb_y) + 5;
             int tmp = 0;
 
             while (true)
-                for (int y = 0; y < Defaults.stage_square_nb_y; y++)
-                    for (int x = 0; x < Defaults.stage_square_nb_x; x++)
+                for (int y = 2; y < (Defaults.stage_square_nb_y - 3); y++)
+                    for (int x = 2; x < (Defaults.stage_square_nb_x - 3); x++)
                         if (tmp++ >= nb)
                             if (_stage.level[y, x] == (int)MapElements.GRASS &&
                                 _stage.level[y + 1, x + 1] == (int)MapElements.GRASS &&
@@ -62,7 +61,7 @@ namespace WindowsGame1
         private void generateSheeps(GameTime gameTime)
         {
             _sheep_generation_timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (_sheep_generation_timer > _sheep_generation_interval)
+            if (_sheep_generation_timer > Defaults.sheep_generation_interval)
             {
                 int x;
                 int y;
@@ -118,7 +117,7 @@ namespace WindowsGame1
                 _stage.level[posy, posx] = (int)MapElements.TREE;
             }
 
-            for (int i = 0; i < (r.Next(10) + 4); i++)
+            for (int i = 0; i < (r.Next(10) + 10); i++)
             {
                 findRandomSpotBig(out posx, out posy);
                 _stage.level[posy, posx] = (int)MapElements.WALL;

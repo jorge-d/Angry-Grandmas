@@ -36,7 +36,7 @@ namespace WindowsGame1
 
             if (!isAlive())
             {
-                _stage.addElement(new Blood(getPosition().X, getPosition().Y));
+                _stage.addElement(new Blood(getPosition().X - 16, getPosition().Y - 16));
                 return false;
             }
             return true;

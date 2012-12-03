@@ -15,7 +15,7 @@ namespace WindowsGame1
         public Blood(float posx, float posy) :
             base(EntityType.BLOOD, Defaults.blood_texture_path, posx, posy, 0)
         {   
-            _scale = 0.5f;
+            _scale = 1f;
             sprite = new BloodAnimation();
         }
 
