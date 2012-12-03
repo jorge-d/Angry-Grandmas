@@ -62,5 +62,34 @@ namespace WindowsGame1
             }
             Stage.getInstance().addElement(new Explosion(x, y, _explosion_scale));
         }
+
+        protected class BulletAnimation : SpriteSheet
+        {
+            private bool _up = true;
+
+            public BulletAnimation() :
+                base(0, 0, 25, 25)
+            {
+                m_interval /= 4;
+            }
+
+            public override void animate(Direction Dir)
+            {
+                if (isTimerElapsed())
+                {
+                    if (_up)
+                        incrementY();
+                    else
+                        decrementY();
+
+                    if (getY() >= 19)
+                        _up = false;
+                    else if (getY() <= 0)
+                        _up = true;
+
+                    resetTimer();
+                }
+            }
+        }
     }
 }
