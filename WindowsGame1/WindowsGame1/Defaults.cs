@@ -20,7 +20,7 @@ namespace WindowsGame1
         static public float entity_movement_interval = 20f;
         static public float explosion_animation_interval = 20f;
         static public float blood_animation_interval = 40f;
-        static public float animation_movement_interval = 200f;
+        static public float animation_movement_interval = 100f;
 
         static public int window_size_x = 1024;
         static public int window_size_y = 768;
@@ -55,5 +55,7 @@ namespace WindowsGame1
         public static int MOUVEMENT_PHASE_BEGIN = 0;
         public static int MOUVEMENT_PHASE_MIDDLE = 1;
         public static int MOUVEMENT_PHASE_END = 2;
+
+        public static int tree_numbers = 50;
     }
 }

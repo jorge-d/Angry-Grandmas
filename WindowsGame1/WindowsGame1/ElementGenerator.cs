@@ -85,8 +85,7 @@ namespace WindowsGame1
             level[posy, posx] = (int)MapElements.SPAWN;
             stage.addElement(new HumanPlayer(posx * Defaults.stage_square_size, posy * Defaults.stage_square_size));
 
-            level[10, 10] = (int)MapElements.TREE;
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < Defaults.tree_numbers; i++)
             {
                 findRandomSpot(out posx, out posy);
                 level[posy, posx] = (int)MapElements.TREE;
