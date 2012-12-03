@@ -11,6 +11,7 @@ namespace WindowsGame1
         private float _sheep_generation_interval = 3000f;
         private float _sheep_generation_timer = 0f;
         Random r = new Random();
+        private Stage _stage = Stage.getInstance();
 
         private void resetSheepTimer()
         {
@@ -24,7 +25,7 @@ namespace WindowsGame1
 
         private void findRandomSpot(out int posx, out int posy)
         {
-            int[,] level = Stage.getInstance().level;
+            int[,] level = _stage.level;
             int nb = (r.Next() % (Defaults.stage_square_nb_x * Defaults.stage_square_nb_y)) + 1;
             int tmp = 0;
 
@@ -55,35 +56,34 @@ namespace WindowsGame1
 
         public int[,] generateRandomWorld(int player_nb)
         {
-            Stage stage = Stage.getInstance();
-            int[,] level = Stage.getInstance().level;
+            int[,] level = _stage.level;
             int posx;
             int posy;
+            Direction dir = Direction.NONE;
 
             for (int y = 0; y < Defaults.stage_square_nb_y; y++)
                 for (int x = 0; x < Defaults.stage_square_nb_x; x++)
                 {
-                    posx = Defaults.stage_square_size * x;
-                    posy = Defaults.stage_square_size * y;
                     if ((x == 0 || ((x + 1) == Defaults.stage_square_nb_x)) &&
                         (y == 0 || ((y + 1) == Defaults.stage_square_nb_y)))
-                        stage.addElement(new Wall(posx, posy, Direction.NONE));
+                        dir = Direction.NONE;
                     else if (x == 0)
-                        stage.addElement(new Wall(posx, posy, Direction.LEFT));
+                        dir = Direction.LEFT;
                     else if ((x + 1) == Defaults.stage_square_nb_x)
-                        stage.addElement(new Wall(posx, posy, Direction.RIGHT));
+                        dir = Direction.RIGHT;
                     else if (y == 0)
-                        stage.addElement(new Wall(posx, posy, Direction.UP));
+                        dir = Direction.UP;
                     else if ((y + 1) == Defaults.stage_square_nb_y)
-                        stage.addElement(new Wall(posx, posy, Direction.DOWN));
+                        dir = Direction.DOWN;
                     else
                         continue;
+                    _stage.addElement(new Wall(Defaults.stage_square_size * x, Defaults.stage_square_size * y, dir));
                     level[y, x] = (int)MapElements.WALL;
                 }
 
             findRandomSpot(out posx, out posy);
             level[posy, posx] = (int)MapElements.SPAWN;
-            stage.addElement(new HumanPlayer(posx * Defaults.stage_square_size, posy * Defaults.stage_square_size));
+            _stage.addElement(new HumanPlayer(posx * Defaults.stage_square_size, posy * Defaults.stage_square_size));
 
             for (int i = 0; i < Defaults.tree_numbers; i++)
             {

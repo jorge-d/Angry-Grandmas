@@ -13,7 +13,7 @@ namespace WindowsGame1
         static private Stage _instance = null;
 
         private LinkedList<AElement> _elements;
-        private ElementGenerator generator = new ElementGenerator();
+        private ElementGenerator generator;
         private Texture2D _world_texture = null;
         private SpriteSheet sprite = new SpriteSheet(0, 0, Defaults.stage_square_size, Defaults.stage_square_size);
 
@@ -41,6 +41,7 @@ namespace WindowsGame1
 
         public bool init(int player_nb)
         {
+            generator = new ElementGenerator();
             loadTexture();
             _elements = new LinkedList<AElement>();
             level = generator.generateRandomWorld(player_nb);
