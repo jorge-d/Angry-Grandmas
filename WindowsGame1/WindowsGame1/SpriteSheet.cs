@@ -18,6 +18,8 @@ namespace WindowsGame1
         protected float m_interval = Defaults.animation_movement_interval;
         protected int x;
         protected int y;
+        private int m_frameWidth;
+        private int m_frameHeight;
         private int m_spriteWidth;
         private int m_spriteHeight;
         private Rectangle m_sourceRect;
@@ -26,8 +28,8 @@ namespace WindowsGame1
 
         public SpriteSheet(int frame_x, int frame_y, int spriteWidth, int spriteHeight)
         {
-            m_spriteWidth = spriteWidth;
-            m_spriteHeight = spriteHeight;
+            m_frameWidth = m_spriteWidth = spriteWidth;
+            m_frameHeight = m_spriteHeight = spriteHeight;
             x = frame_x;
             y = frame_y;
         }
@@ -89,7 +91,13 @@ namespace WindowsGame1
 
         private void updateSourceRec()
         {
-            m_sourceRect = new Rectangle(x * m_spriteWidth, y * m_spriteHeight, m_spriteWidth, m_spriteHeight);
+            m_sourceRect = new Rectangle(x * m_frameWidth, y * m_frameHeight, m_spriteWidth, m_spriteHeight);
+        }
+
+        public void setSpriteDimensions(int width, int height)
+        {
+            m_spriteWidth = width;
+            m_spriteHeight = height;
         }
 
         public int getX() { return x; }

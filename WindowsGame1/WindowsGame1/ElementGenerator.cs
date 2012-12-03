@@ -25,19 +25,38 @@ namespace WindowsGame1
 
         private void findRandomSpot(out int posx, out int posy)
         {
-            int[,] level = _stage.level;
-            int nb = (r.Next() % (Defaults.stage_square_nb_x * Defaults.stage_square_nb_y)) + 1;
+            int nb = r.Next(Defaults.stage_square_nb_x * Defaults.stage_square_nb_y) + 1;
             int tmp = 0;
 
             while (true)
                 for (int y = 0; y < Defaults.stage_square_nb_y; y++)
                     for (int x = 0; x < Defaults.stage_square_nb_x; x++)
-                        if (level[y, x] != (int)MapElements.WALL && tmp++ >= nb)
+                        if (_stage.level[y, x] == (int)MapElements.GRASS && tmp++ >= nb)
                         {
                             posx = x;
                             posy = y;
                             return;
                         }
+        }
+
+        private void findRandomSpotBig(out int posx, out int posy)
+        {
+            int nb = r.Next(Defaults.stage_square_nb_x * Defaults.stage_square_nb_y) + 1;
+            int tmp = 0;
+
+            while (true)
+                for (int y = 0; y < Defaults.stage_square_nb_y; y++)
+                    for (int x = 0; x < Defaults.stage_square_nb_x; x++)
+                        if (tmp++ >= nb)
+                            if (_stage.level[y, x] == (int)MapElements.GRASS &&
+                                _stage.level[y + 1, x + 1] == (int)MapElements.GRASS &&
+                                _stage.level[y, x + 1] == (int)MapElements.GRASS &&
+                                _stage.level[y + 1, x] == (int)MapElements.GRASS)
+                            {
+                                posx = x;
+                                posy = y;
+                                return;
+                            }
         }
 
         private void generateSheeps(GameTime gameTime)
@@ -49,14 +68,13 @@ namespace WindowsGame1
                 int y;
 
                 findRandomSpot(out x, out y);
-                Stage.getInstance().addElement(new Sheep(Defaults.stage_square_size * x, Defaults.stage_square_size * y));
+                _stage.addElement(new Sheep(Defaults.stage_square_size * x, Defaults.stage_square_size * y));
                 resetSheepTimer();
             }
         }
 
-        public int[,] generateRandomWorld(int player_nb)
+        public void generateRandomWorld(int player_nb)
         {
-            int[,] level = _stage.level;
             int posx;
             int posy;
             Direction dir = Direction.NONE;
@@ -78,20 +96,37 @@ namespace WindowsGame1
                     else
                         continue;
                     _stage.addElement(new Wall(Defaults.stage_square_size * x, Defaults.stage_square_size * y, dir));
-                    level[y, x] = (int)MapElements.WALL;
+                    _stage.level[y, x] = (int)MapElements.WALL;
                 }
 
             findRandomSpot(out posx, out posy);
-            level[posy, posx] = (int)MapElements.SPAWN;
+            _stage.level[posy, posx] = (int)MapElements.SPAWN;
             _stage.addElement(new HumanPlayer(posx * Defaults.stage_square_size, posy * Defaults.stage_square_size));
+
+            generateTrees();
+
+        }
+
+        private void generateTrees()
+        {
+            int posx;
+            int posy;
 
             for (int i = 0; i < Defaults.tree_numbers; i++)
             {
                 findRandomSpot(out posx, out posy);
-                level[posy, posx] = (int)MapElements.TREE;
+                _stage.level[posy, posx] = (int)MapElements.TREE;
             }
 
-            return level;
+            for (int i = 0; i < (r.Next(20) + 2); i++)
+            {
+                findRandomSpotBig(out posx, out posy);
+                _stage.level[posy, posx] = (int)MapElements.WALL;
+                _stage.level[posy + 1, posx] = (int)MapElements.WALL;
+                _stage.level[posy, posx + 1] = (int)MapElements.WALL;
+                _stage.level[posy + 1, posx + 1] = (int)MapElements.WALL;
+                _stage.addElement(new Tree(posx * Defaults.stage_square_size, posy * Defaults.stage_square_size));
+            }
         }
     }
 }

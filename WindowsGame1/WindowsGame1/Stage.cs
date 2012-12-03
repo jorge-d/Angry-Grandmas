@@ -44,7 +44,7 @@ namespace WindowsGame1
             generator = new ElementGenerator();
             loadTexture();
             _elements = new LinkedList<AElement>();
-            level = generator.generateRandomWorld(player_nb);
+            generator.generateRandomWorld(player_nb);
             return true;
         }
 
@@ -88,11 +88,21 @@ namespace WindowsGame1
             spriteBatch.Draw(_world_texture, pos, sprite.SourceRect, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0);
         }
 
+        public void drawElement(SpriteBatch spriteBatch, Vector2 pos, int x, int y, int width, int height)
+        {
+            sprite.setSpriteDimensions(width, height);
+            sprite.setX(x);
+            sprite.setY(y);
+            spriteBatch.Draw(_world_texture, pos, sprite.SourceRect, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0);
+            sprite.setSpriteDimensions(Defaults.stage_square_size, Defaults.stage_square_size);
+        }
+
         public void drawElement(SpriteBatch spriteBatch, MapElements type, int x, int y)
         {
             Vector2 pos = new Vector2(x, y);
             switch (type)
             {
+                case MapElements.WALL:
                 case MapElements.SPAWN:
                 case MapElements.GRASS:
                     sprite.setX(1);
@@ -102,6 +112,8 @@ namespace WindowsGame1
                     sprite.setX(0);
                     sprite.setY(12);
                     break;
+                default:
+                    return;
             }
             spriteBatch.Draw(_world_texture, pos, sprite.SourceRect, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0);
         }

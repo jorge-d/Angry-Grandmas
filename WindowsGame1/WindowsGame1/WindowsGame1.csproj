@@ -123,6 +123,7 @@
     <Compile Include="SpriteSheet.cs" />
     <Compile Include="Stage.cs" />
     <Compile Include="Elements\Wall.cs" />
+    <Compile Include="Tree.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
