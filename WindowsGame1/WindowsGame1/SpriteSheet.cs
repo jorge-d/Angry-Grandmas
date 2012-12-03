@@ -111,6 +111,7 @@ namespace WindowsGame1
         protected void resetTimer() { m_timer = 0f; }
         protected bool isTimerElapsed() { return (m_timer > m_interval); }
         public void update(GameTime gameTime) { m_timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds; }
+        public virtual bool isAnimationOver() { return false; }
 
         public Rectangle SourceRect
         {

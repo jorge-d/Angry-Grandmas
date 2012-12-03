@@ -13,11 +13,8 @@ namespace WindowsGame1
         Direction _dir;
 
          public Sheep(float posx, float posy) :
-            base(Defaults.getSheepRandomTexture(), posx, posy, Defaults.sheep_speed, Defaults.sheep_health)
+            base(Defaults.getSheepRandomTexture(), 32, 31,  posx, posy, Defaults.sheep_speed, Defaults.sheep_health)
         {
-            Width = 32;
-            Height = 31;
-            sprite = new SpriteSheet(Defaults.MOUVEMENT_PHASE_MIDDLE, Defaults.MOUVEMENT_DIRECTION_DOWN, Width, Height);
             pickRandomDirection();
         }
 

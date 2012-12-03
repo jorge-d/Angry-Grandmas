@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Elements\AAnimate.cs" />
     <Compile Include="Elements\Effects\Blood.cs" />
     <Compile Include="ElementGenerator.cs" />
     <Compile Include="Elements\AElement.cs" />

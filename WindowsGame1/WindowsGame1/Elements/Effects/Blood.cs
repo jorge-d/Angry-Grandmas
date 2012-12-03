@@ -7,28 +7,18 @@ using Microsoft.Xna.Framework;
 
 namespace WindowsGame1
 {
-    class Blood : AElement
+    class Blood : AAnimate
     {
-        BloodAnimation sprite;
-        private float _scale;
-
         public Blood(float posx, float posy) :
-            base(EntityType.BLOOD, Defaults.blood_texture_path, posx, posy, 0)
+            base(new BloodAnimation(), EntityType.BLOOD, Defaults.blood_texture_path, posx, posy, 0)
         {   
-            _scale = 1f;
-            sprite = new BloodAnimation();
-        }
-
-        public override void draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(_texture, getPosition(), sprite.SourceRect, Color.White, 0f, Vector2.Zero, _scale, SpriteEffects.None, 0);
         }
 
         public override bool update(GameTime gameTime)
         {
-            sprite.update(gameTime);
-            sprite.animate(Direction.NONE);
+            base.update(gameTime);
 
+            sprite.animate(Direction.NONE);
             if (sprite.isAnimationOver())
                 return false;
             return true;
@@ -57,7 +47,7 @@ namespace WindowsGame1
                 }
             }
 
-            public bool isAnimationOver()
+            public override bool isAnimationOver()
             {
                 if (getY() > 2)
                     return true;

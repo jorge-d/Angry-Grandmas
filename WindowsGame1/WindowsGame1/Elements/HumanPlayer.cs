@@ -14,11 +14,8 @@ namespace WindowsGame1
         protected float shoot_timer = 0f;
 
         public HumanPlayer(float posx, float posy) :
-            base(Defaults.human_texture_path, posx, posy, Defaults.player_speed, Defaults.player_health)
+            base(Defaults.human_texture_path, Defaults.player_width, Defaults.player_height ,posx, posy, Defaults.player_speed, Defaults.player_health)
         {
-            Width = Defaults.player_width;
-            Height = Defaults.player_height;
-            sprite = new SpriteSheet(Defaults.MOUVEMENT_PHASE_MIDDLE, Defaults.MOUVEMENT_DIRECTION_DOWN, Width, Height);
         }
 
         public override bool update(GameTime gameTime)
@@ -41,8 +38,12 @@ namespace WindowsGame1
             if (kS.IsKeyDown(Keys.Space) && isShootTimerElapsed())
             {
                 shoot_timer = 0f;
-//                Stage.getInstance().addElement(new Cloud(this, looking_at, getPosition().X, getPosition().Y));
                 Stage.getInstance().addElement(new Fireball(this, looking_at, getPosition().X, getPosition().Y));
+            }
+            if (kS.IsKeyDown(Keys.O) && isShootTimerElapsed())
+            {
+                shoot_timer = 0f;
+                Stage.getInstance().addElement(new Cloud(this, looking_at, getPosition().X, getPosition().Y));
             }
         }
 
