@@ -42,7 +42,7 @@ namespace WindowsGame1
         static public string world_texture_path = @"Images/world_elements";
         static public string blood_texture_path = @"Images/blood";
 
-        static public float sheep_speed = 2f;
+        static public float sheep_speed = 1f;
         static public int sheep_health = 10;
         static public int cloud_damages = 2;
         static public float cloud_speed = 4f;
