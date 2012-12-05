@@ -40,12 +40,12 @@ namespace WindowsGame1
 
         private void findRandomSpotBig(out int posx, out int posy)
         {
-            int nb = r.Next(Defaults.stage_square_nb_x * Defaults.stage_square_nb_y) + 5;
+            int nb = r.Next(Defaults.stage_square_nb_x * Defaults.stage_square_nb_y);
             int tmp = 0;
 
             while (true)
-                for (int y = 2; y < (Defaults.stage_square_nb_y - 3); y++)
-                    for (int x = 2; x < (Defaults.stage_square_nb_x - 3); x++)
+                for (int y = 1; y < (Defaults.stage_square_nb_y - 2); y++)
+                    for (int x = 1; x < (Defaults.stage_square_nb_x - 2); x++)
                         if (tmp++ >= nb)
                             if (_stage.level[y, x] == (int)MapElements.GRASS &&
                                 _stage.level[y + 1, x + 1] == (int)MapElements.GRASS &&
@@ -117,7 +117,7 @@ namespace WindowsGame1
                 _stage.level[posy, posx] = (int)MapElements.TREE;
             }
 
-            for (int i = 0; i < (r.Next(10) + 10); i++)
+            for (int i = 0; i < (r.Next(10) + 25); i++)
             {
                 findRandomSpotBig(out posx, out posy);
                 _stage.level[posy, posx] = (int)MapElements.WALL;

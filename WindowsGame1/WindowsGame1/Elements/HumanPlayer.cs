@@ -11,44 +11,27 @@ namespace WindowsGame1
 {
     class HumanPlayer : AEntity
     {
-        protected float shoot_timer = 0f;
+        private Gun gun;
 
         public HumanPlayer(float posx, float posy) :
             base(Defaults.human_texture_path, Defaults.player_width, Defaults.player_height ,posx, posy, Defaults.player_speed, Defaults.player_health)
         {
+            gun = new Gun(this);
         }
 
         public override bool update(GameTime gameTime)
         {
             base.update(gameTime);
+
             updateUsingKeyboard(gameTime);
+            gun.update(gameTime, sprite.getLookingDirection());
             return true;
         }
 
-        private bool isShootTimerElapsed()
+        private Direction moveUsingKeyboard()
         {
-            return (shoot_timer > Defaults.cloud_shoot_interval);
-        }
+            KeyboardState kS = Keyboard.GetState();
 
-        private void shoot(GameTime gameTime, KeyboardState kS)
-        {
-            shoot_timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            Direction looking_at = sprite.getLookingDirection();
-
-            if (kS.IsKeyDown(Keys.Space) && isShootTimerElapsed())
-            {
-                shoot_timer = 0f;
-                Stage.getInstance().addElement(new Fireball(this, looking_at, getPosition().X, getPosition().Y));
-            }
-            if (kS.IsKeyDown(Keys.O) && isShootTimerElapsed())
-            {
-                shoot_timer = 0f;
-                Stage.getInstance().addElement(new Cloud(this, looking_at, getPosition().X, getPosition().Y));
-            }
-        }
-
-        private Direction moveUsingKeyboard(KeyboardState kS)
-        {
             if (kS.IsKeyDown(Keys.P))
                 _game.Exit();
 
@@ -77,13 +60,11 @@ namespace WindowsGame1
 
         private void updateUsingKeyboard(GameTime gameTime)
         {
-            KeyboardState kS = Keyboard.GetState();
             if (isMoveTimerElapsed())
             {
-                Direction dir = moveUsingKeyboard(kS);
+                Direction dir = moveUsingKeyboard();
                 sprite.animate(dir);
             }
-            shoot(gameTime, kS);
         }
     }
 }
