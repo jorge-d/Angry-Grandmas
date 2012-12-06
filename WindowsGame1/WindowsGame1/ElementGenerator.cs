@@ -69,7 +69,7 @@ namespace WindowsGame1
 
         private void generateSheeps(GameTime gameTime)
         {
-            if (Sheep.sheep_instances > 10)
+            if (Sheep.sheep_instances >= Defaults.MAX_SHEEP_NUMBER)
                 return;
 
             _sheep_generation_timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;

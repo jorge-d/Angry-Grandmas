@@ -15,7 +15,7 @@ namespace WindowsGame1
         private int player_nb;
 
         public HumanPlayer(float posx, float posy, int nb) :
-            base(Defaults.human_texture_path, Defaults.player_width, Defaults.player_height ,posx, posy, Defaults.player_speed, Defaults.player_health)
+            base(Defaults.humanTexturePath(nb), Defaults.player_width, Defaults.player_height ,posx, posy, Defaults.player_speed, Defaults.player_health)
         {
             gun = new Gun(this, nb);
             player_nb = nb;
@@ -33,28 +33,20 @@ namespace WindowsGame1
         private Direction moveUsingKeyboard()
         {
             KeyboardState kS = Keyboard.GetState();
+            Direction dir = Direction.NONE;
 
             if ((player_nb == 1 && kS.IsKeyDown(Keys.A)) || (player_nb == 2 && kS.IsKeyDown(Keys.Left)))
-            {
-                move(Direction.LEFT);
-                return Direction.LEFT;
-            }
+                dir = Direction.LEFT;
             else if ((player_nb == 1 && kS.IsKeyDown(Keys.D)) || (player_nb == 2 && kS.IsKeyDown(Keys.Right)))
-            {
-                move(Direction.RIGHT);
-                return Direction.RIGHT;
-            }
+                dir = Direction.RIGHT;
             else if ((player_nb == 1 && kS.IsKeyDown(Keys.W)) || (player_nb == 2 && kS.IsKeyDown(Keys.Up)))
-            {
-                move(Direction.UP);
-                return Direction.UP;
-            }
+                dir = Direction.UP;
             else if ((player_nb == 1 && kS.IsKeyDown(Keys.S)) || (player_nb == 2 && kS.IsKeyDown(Keys.Down)))
-            {
-                move(Direction.DOWN);
-                return Direction.DOWN;
-            }
-            return Direction.NONE;
+                dir = Direction.DOWN;
+
+            if (dir != Direction.NONE)
+                move(dir);
+            return dir;
         }
 
         private void updateUsingKeyboard(GameTime gameTime)

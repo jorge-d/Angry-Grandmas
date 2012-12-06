@@ -29,16 +29,22 @@ namespace WindowsGame1
         static public int stage_square_nb_x = 32;
         static public int stage_square_nb_y = 20;
         static public int stage_square_size = 32;
+        static private Random r = new Random();
 
         static public string getSheepRandomTexture()
         {
-            Random r = new Random();
             if (r.Next() % 2 == 0)
                 return @"Images/white_sheep";
             return @"Images/black_sheep";
         }
+        static public string humanTexturePath(int nb)
+        {
+            if (nb == 1)
+                return @"Images/hero2";
+            return @"Images/hero";
+        }
+
         static public string sheep_texture_path = @"Images/white_sheep";
-        static public string human_texture_path = @"Images/hero2";
         static public string cloud_texture_path = @"Images/cloud";
         static public string fireball_texture_path = @"Images/fireball";
         static public string explosion_texture_path = @"Images/explosion";
@@ -51,6 +57,8 @@ namespace WindowsGame1
         static public int fireball_damages = 20;
         static public float cloud_speed = 2f;
         static public float fireball_speed = 3f;
+
+        static public int MAX_SHEEP_NUMBER = 10;
 
         public static int MOUVEMENT_DIRECTION_DOWN = 0;
         public static int MOUVEMENT_DIRECTION_LEFT = 1;
