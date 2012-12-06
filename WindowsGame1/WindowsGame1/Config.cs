@@ -17,7 +17,7 @@ namespace WindowsGame1
         static public int player_height = 32;
 
         static public float cloud_shoot_interval = 200f;
-        static public float fireball_shoot_interval = 1000f;
+        static public float fireball_shoot_interval = 1500f;
         static public float entity_movement_interval = 15f;
         static public float explosion_animation_interval = 20f;
         static public float blood_animation_interval = 40f;
@@ -49,8 +49,8 @@ namespace WindowsGame1
         static public int sheep_health = 10;
         static public int cloud_damages = 2;
         static public int fireball_damages = 20;
-        static public float cloud_speed = 4f;
-        static public float fireball_speed = 2f;
+        static public float cloud_speed = 2f;
+        static public float fireball_speed = 3f;
 
         public static int MOUVEMENT_DIRECTION_DOWN = 0;
         public static int MOUVEMENT_DIRECTION_LEFT = 1;

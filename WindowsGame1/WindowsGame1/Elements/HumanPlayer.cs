@@ -12,11 +12,13 @@ namespace WindowsGame1
     class HumanPlayer : AEntity
     {
         private Gun gun;
+        private int player_nb;
 
-        public HumanPlayer(float posx, float posy) :
+        public HumanPlayer(float posx, float posy, int nb) :
             base(Defaults.human_texture_path, Defaults.player_width, Defaults.player_height ,posx, posy, Defaults.player_speed, Defaults.player_health)
         {
-            gun = new Gun(this);
+            gun = new Gun(this, nb);
+            player_nb = nb;
         }
 
         public override bool update(GameTime gameTime)
@@ -32,25 +34,22 @@ namespace WindowsGame1
         {
             KeyboardState kS = Keyboard.GetState();
 
-            if (kS.IsKeyDown(Keys.P))
-                _game.Exit();
-
-            if (kS.IsKeyDown(Keys.A))
+            if ((player_nb == 1 && kS.IsKeyDown(Keys.A)) || (player_nb == 2 && kS.IsKeyDown(Keys.Left)))
             {
                 move(Direction.LEFT);
                 return Direction.LEFT;
             }
-            else if (kS.IsKeyDown(Keys.D))
+            else if ((player_nb == 1 && kS.IsKeyDown(Keys.D)) || (player_nb == 2 && kS.IsKeyDown(Keys.Right)))
             {
                 move(Direction.RIGHT);
                 return Direction.RIGHT;
             }
-            else if (kS.IsKeyDown(Keys.W))
+            else if ((player_nb == 1 && kS.IsKeyDown(Keys.W)) || (player_nb == 2 && kS.IsKeyDown(Keys.Up)))
             {
                 move(Direction.UP);
                 return Direction.UP;
             }
-            else if (kS.IsKeyDown(Keys.S))
+            else if ((player_nb == 1 && kS.IsKeyDown(Keys.S)) || (player_nb == 2 && kS.IsKeyDown(Keys.Down)))
             {
                 move(Direction.DOWN);
                 return Direction.DOWN;

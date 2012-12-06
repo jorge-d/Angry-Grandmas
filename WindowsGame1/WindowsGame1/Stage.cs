@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace WindowsGame1
 {
@@ -51,6 +52,10 @@ namespace WindowsGame1
         public int update(GameTime gametime)
         {
             LinkedList<AElement> elements = new LinkedList<AElement>(_elements);
+            KeyboardState kS = Keyboard.GetState();
+
+            if (kS.IsKeyDown(Keys.Escape))
+                _game.Exit();
 
             foreach (AElement element in elements)
                 if (!element.update(gametime))

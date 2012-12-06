@@ -15,10 +15,12 @@ namespace WindowsGame1
         private float shoot_timer = 0f;
         private float change_weapon_timer = 0f;
         private weapon currentWeapon = weapon.CLOUD;
+        private int player_nb;
 
-        public Gun(HumanPlayer p)
+        public Gun(HumanPlayer p, int nb)
         {
             _player = p;
+            player_nb = nb;
         }
 
         public void update(GameTime gameTime, Direction direction)
@@ -32,7 +34,8 @@ namespace WindowsGame1
         {
             KeyboardState kS = Keyboard.GetState();
 
-            if (kS.IsKeyDown(Keys.Space) && isShootTimerElapsed())
+            if (((player_nb == 1 && kS.IsKeyDown(Keys.Space)) ||
+                (player_nb == 2 && kS.IsKeyDown(Keys.RightAlt))) && isShootTimerElapsed())
             {
                 if (currentWeapon == weapon.CLOUD)
                     Stage.getInstance().addElement(new Cloud(_player, dir, _player.getPosition().X, _player.getPosition().Y));
@@ -40,7 +43,8 @@ namespace WindowsGame1
                     Stage.getInstance().addElement(new Fireball(_player, dir, _player.getPosition().X, _player.getPosition().Y));
                 resetShootTimer();
             }
-            if (kS.IsKeyDown(Keys.Q) && change_weapon_timer > 1000f)
+            if (((player_nb == 1 && kS.IsKeyDown(Keys.Q)) ||
+                (player_nb == 2 && kS.IsKeyDown(Keys.RightShift))) && change_weapon_timer > 1000f)
             {
                 change_weapon_timer = 0f;
                 currentWeapon++;

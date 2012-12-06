@@ -58,24 +58,30 @@ namespace WindowsGame1
                             }
         }
 
+        private void spawnSheep()
+        {
+            int x;
+            int y;
+
+            findRandomSpot(out x, out y);
+            _stage.addElement(new Sheep(Defaults.stage_square_size * x, Defaults.stage_square_size * y));
+        }
+
         private void generateSheeps(GameTime gameTime)
         {
+            if (Sheep.sheep_instances > 10)
+                return;
+
             _sheep_generation_timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             if (_sheep_generation_timer > Defaults.sheep_generation_interval)
             {
-                int x;
-                int y;
-
-                findRandomSpot(out x, out y);
-                _stage.addElement(new Sheep(Defaults.stage_square_size * x, Defaults.stage_square_size * y));
+                spawnSheep();
                 resetSheepTimer();
             }
         }
 
         public void generateRandomWorld(int player_nb)
         {
-            int posx;
-            int posy;
             Direction dir = Direction.NONE;
 
             for (int y = 0; y < Defaults.stage_square_nb_y; y++)
@@ -98,12 +104,22 @@ namespace WindowsGame1
                     _stage.level[y, x] = (int)MapElements.WALL;
                 }
 
+            generateTrees();
+            for (int i = 0; i < 5; i++)
+                spawnSheep();
+
+            spawnPlayer(1);
+            spawnPlayer(2);
+        }
+
+        private void spawnPlayer(int nb)
+        {
+            int posy;
+            int posx;
+
             findRandomSpot(out posx, out posy);
             _stage.level[posy, posx] = (int)MapElements.SPAWN;
-            _stage.addElement(new HumanPlayer(posx * Defaults.stage_square_size, posy * Defaults.stage_square_size));
-
-            generateTrees();
-
+            _stage.addElement(new HumanPlayer(posx * Defaults.stage_square_size, posy * Defaults.stage_square_size, nb));
         }
 
         private void generateTrees()
