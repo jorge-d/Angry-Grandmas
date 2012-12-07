@@ -23,6 +23,13 @@ namespace WindowsGame1
             player_nb = nb;
         }
 
+        public string getWeaponName()
+        {
+            if (currentWeapon == weapon.CLOUD)
+                return "Cloud";
+            return "Fireball";
+        }
+
         public void update(GameTime gameTime, Direction direction)
         {
             shoot_timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -46,7 +53,7 @@ namespace WindowsGame1
                 resetShootTimer();
             }
             if (((player_nb == 1 && kS.IsKeyDown(Keys.Q)) ||
-                (player_nb == 2 && kS.IsKeyDown(Keys.RightShift))) && change_weapon_timer > 1000f)
+                (player_nb == 2 && kS.IsKeyDown(Keys.RightShift))) && change_weapon_timer > 800f)
             {
                 change_weapon_timer = 0f;
                 currentWeapon++;
@@ -70,7 +77,5 @@ namespace WindowsGame1
                 shoot_interval = Defaults.fireball_shoot_interval;
             return (shoot_timer > shoot_interval);
         }
-
-
     }
 }

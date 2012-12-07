@@ -16,12 +16,33 @@ namespace WindowsGame1
         private bool bleeding = false;
         private float bleedingTimer;
         private float cleeping;
+        private int score = 0;
+        private Vector2 fontPos;
+        private Vector2 fontPos2;
 
         public HumanPlayer(float posx, float posy, int nb) :
             base(Defaults.humanTexturePath(nb), Defaults.player_width, Defaults.player_height ,posx, posy, Defaults.player_speed, Defaults.player_health)
         {
             gun = new Gun(this, nb);
             player_nb = nb;
+
+            createFontPos(nb);             
+        }
+
+        private void createFontPos(int nb)
+        {
+            int y = Defaults.stage_square_nb_y * Defaults.stage_square_size;
+            int x = 120;
+
+            if (nb == 2)
+                x = ((Defaults.window_size_y / 4) * 3) + 80;
+            fontPos = new Vector2(x, y);
+
+            if (nb == 1)
+                x = 15;
+            else
+                x = Defaults.window_size_x - 100;
+            fontPos2 = new Vector2(x, y);
         }
 
         private void updateBleedingTimer(GameTime gameTime)
@@ -92,6 +113,21 @@ namespace WindowsGame1
             if (dir != Direction.NONE)
                 move(dir);
             sprite.animate(dir);
+        }
+
+        public override void draw(SpriteBatch spriteBatch)
+        {
+            base.draw(spriteBatch);
+            string msg;
+
+            if (bleeding)
+                spriteBatch.DrawString(_game.font, "HURT", fontPos2, _color);
+
+            if (player_nb == 1)
+                msg = score + " - " + gun.getWeaponName();
+            else
+                msg = gun.getWeaponName() + " - " + score;
+            spriteBatch.DrawString(_game.font, msg, fontPos, Color.Black);
         }
     }
 }

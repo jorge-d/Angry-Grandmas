@@ -25,7 +25,7 @@ namespace WindowsGame1
 
         EntityType _type;
 
-        static protected Game _game = Game1.getGameInstance();
+        static protected Game1 _game = Game1.getGameInstance();
 
         public AElement(EntityType type, string texture_path, float posx, float posy, float speed)
         {
