@@ -35,7 +35,7 @@ namespace WindowsGame1
             int x = 120;
 
             if (nb == 2)
-                x = ((Defaults.window_size_y / 4) * 3) + 80;
+                x = (Defaults.window_size_x / 3) * 2;
             fontPos = new Vector2(x, y);
 
             if (nb == 1)
@@ -113,6 +113,11 @@ namespace WindowsGame1
             if (dir != Direction.NONE)
                 move(dir);
             sprite.animate(dir);
+        }
+
+        public void incrementScore(int value)
+        {
+            score += value;
         }
 
         public override void draw(SpriteBatch spriteBatch)

@@ -37,11 +37,20 @@ namespace WindowsGame1
 
         protected bool hitsPlayer()
         {
+            // PLAYER can be a sheep OR a player
             foreach (AElement elem in getOverlapingElements())
                 if (elem.GetElementType() == EntityType.PLAYER && elem != _player)
                 {
-                    if (!((AEntity)elem).hurt(_damages))
+                    AEntity e = (AEntity)elem;
+
+                    // The player is bleeding and cannot be attacked for the moment
+                    if (!e.hurt(_damages))
                         return false;
+
+                    if (e.isAlive()) // A player or a sheep has been hit
+                        _player.incrementScore(Defaults.SCORE_ON_HIT);
+                    else // The target was killed - It was a sheep
+                        _player.incrementScore(Defaults.SCORE_ON_DEATH);
                     createExplosion();
                     return true;
                 }

@@ -29,7 +29,7 @@ namespace WindowsGame1
             return true;
         }
 
-        protected bool isAlive()
+        public bool isAlive()
         {
             if (_health <= 0)
                 return false;

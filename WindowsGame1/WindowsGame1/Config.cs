@@ -25,7 +25,7 @@ namespace WindowsGame1
         static public float sheep_generation_interval = 2500f;
 
         static public int window_size_x = 1024;
-        static public int window_size_y = 768;
+        static public int window_size_y = 688;
         static public int stage_square_nb_x = 32;
         static public int stage_square_nb_y = 20;
         static public int stage_square_size = 32;
@@ -58,7 +58,10 @@ namespace WindowsGame1
         static public int cloud_damages = 2;
         static public int fireball_damages = 20;
         static public float cloud_speed = 2f;
-        static public float fireball_speed = 3f;
+        static public float fireball_speed = 4f;
+
+        static public int SCORE_ON_HIT = 1;
+        static public int SCORE_ON_DEATH = 3;
 
         static public int MAX_SHEEP_NUMBER = 10;
 
