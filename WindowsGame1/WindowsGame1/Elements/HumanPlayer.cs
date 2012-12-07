@@ -21,12 +21,22 @@ namespace WindowsGame1
         private Vector2 fontPos2;
 
         public HumanPlayer(float posx, float posy, int nb) :
-            base(Defaults.humanTexturePath(nb), Defaults.player_width, Defaults.player_height ,posx, posy, Defaults.player_speed, Defaults.player_health)
+            base(Defaults.humanTexturePath(nb), Defaults.player_width, Defaults.player_height, posx, posy, Defaults.player_speed, Defaults.player_health)
         {
             gun = new Gun(this, nb);
             player_nb = nb;
 
             createFontPos(nb);             
+        }
+
+        public int getPlayerNb()
+        {
+            return player_nb;
+        }
+
+        public int getSore()
+        {
+            return score;
         }
 
         private void createFontPos(int nb)

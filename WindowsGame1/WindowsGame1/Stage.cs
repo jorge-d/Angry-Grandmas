@@ -12,13 +12,12 @@ namespace WindowsGame1
     {
         static private Game _game = Game1.getGameInstance();
         static private Stage _instance = null;
+        static private Texture2D _world_texture = null;
 
         private LinkedList<AElement> _elements;
         private ElementGenerator generator;
-        private Texture2D _world_texture = null;
         private SpriteSheet sprite = new SpriteSheet(0, 0, Defaults.stage_square_size, Defaults.stage_square_size);
-
-        public int[,] level = new int[Defaults.stage_square_nb_y, Defaults.stage_square_nb_x];
+        public int[,] level;
 
         static public Stage getInstance()
         {
@@ -40,12 +39,13 @@ namespace WindowsGame1
                 _world_texture = _game.Content.Load<Texture2D>(Defaults.world_texture_path);
         }
 
-        public bool init(int player_nb)
+        public bool init()
         {
+            level = new int[Defaults.stage_square_nb_y, Defaults.stage_square_nb_x]; 
             generator = new ElementGenerator();
             loadTexture();
             _elements = new LinkedList<AElement>();
-            generator.generateRandomWorld(player_nb);
+            generator.generateRandomWorld(2);
             return true;
         }
 
@@ -57,9 +57,28 @@ namespace WindowsGame1
                 if (!element.update(gametime))
                     _elements.Remove(element);
             generator.update(gametime);
-            return 0;
+            return Sheep.sheep_instances = 0;
         }
 
+        public string endOfGame()
+        {
+            HumanPlayer winner = null;
+            foreach (AElement element in _elements)
+                if (element is HumanPlayer)
+                {
+                    HumanPlayer h = (HumanPlayer)element;
+                    if (winner == null)
+                        winner = h;
+                    else if (winner.getSore() < h.getSore())
+                        winner = h;
+                    else if (winner.getSore() == h.getSore())
+                        winner = null;
+                }
+            if (winner != null)
+                return "PLAYER " + winner.getPlayerNb() + " WON !";
+            return "THE RESULT IS TIE!";
+        }
+        
 
         public void getIntersections(Rectangle rec, ref LinkedList<AElement> ret)
         {

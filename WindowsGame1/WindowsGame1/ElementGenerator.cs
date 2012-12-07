@@ -9,7 +9,7 @@ namespace WindowsGame1
     class ElementGenerator
     {
         private float _sheep_generation_timer = 0f;
-        Random r = new Random();
+        static private Random r = new Random();
         private Stage _stage = Stage.getInstance();
 
         private void resetSheepTimer()
@@ -82,6 +82,7 @@ namespace WindowsGame1
 
         public void generateRandomWorld(int player_nb)
         {
+            Sheep.sheep_instances = 0;
             Direction dir = Direction.NONE;
 
             for (int y = 0; y < Defaults.stage_square_nb_y; y++)

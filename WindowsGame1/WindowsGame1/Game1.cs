@@ -25,6 +25,9 @@ namespace WindowsGame1
         private string time_display;
         private TimeSpan timer = new TimeSpan();
         private Vector2 position;
+        private bool game_over = false;
+        private string game_over_msg;
+        private Vector2 game_over_msg_position;
 
         static public Game1 getGameInstance()
         {
@@ -35,6 +38,7 @@ namespace WindowsGame1
         {
             _instance = this;
             position = new Vector2((Defaults.window_size_x / 2) - 50, Defaults.stage_square_nb_y * Defaults.stage_square_size);
+            game_over_msg_position = new Vector2(Defaults.window_size_x / 3, Defaults.window_size_y / 2);
 
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = Defaults.window_size_x;
@@ -67,7 +71,7 @@ namespace WindowsGame1
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("angrygrandma");
 
-            _stage.init(1);
+            _stage.init();
         }
 
         /// <summary>
@@ -88,11 +92,25 @@ namespace WindowsGame1
         {
             KeyboardState kS = Keyboard.GetState();
 
-            if (kS.IsKeyDown(Keys.Escape))
+            if (kS.IsKeyDown(Keys.I))
                 this.Exit();
 
-            _stage.update(gameTime);
-            updateTimer(gameTime);
+            if (game_over)
+            {
+                if (kS.IsKeyDown(Keys.Enter))
+                {
+                    game_over = false;
+                    timer = new TimeSpan();
+                    _stage.init();
+                }
+                else if (kS.IsKeyDown(Keys.Escape))
+                    this.Exit();
+            }
+            else
+            {
+                _stage.update(gameTime);
+                updateTimer(gameTime);
+            }
             base.Update(gameTime);
         }
 
@@ -100,6 +118,12 @@ namespace WindowsGame1
         {
             timer += gameTime.ElapsedGameTime;
             time_display = timer.Seconds + ":" + (timer.Milliseconds / 10);
+
+            if (timer.Seconds >= 2)
+            {
+                game_over = true;
+                game_over_msg = _stage.endOfGame();
+            }
         }
 
         /// <summary>
@@ -108,12 +132,23 @@ namespace WindowsGame1
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.LightGray);
+            if (!game_over)
+                GraphicsDevice.Clear(Color.LightGray);
+            else
+                GraphicsDevice.Clear(Color.Black);
 
-            // TODO: Add your drawing code here
             spriteBatch.Begin();
-            _stage.draw(spriteBatch);
-            spriteBatch.DrawString(font, time_display, position, Color.Orange);
+            if (game_over)
+            {
+                Vector2 v = new Vector2(Defaults.window_size_x / 6, Defaults.stage_square_nb_y * Defaults.stage_square_size);
+                spriteBatch.DrawString(font, game_over_msg, game_over_msg_position, Color.Yellow);
+                spriteBatch.DrawString(font, "Press Enter to restart or escape to exit", v, Color.Orange);
+            }
+            else
+            {
+                _stage.draw(spriteBatch);
+                spriteBatch.DrawString(font, time_display, position, Color.Orange);
+            }
             spriteBatch.End();
 
             base.Draw(gameTime);
