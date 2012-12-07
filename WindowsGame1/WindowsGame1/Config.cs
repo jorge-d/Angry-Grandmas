@@ -44,6 +44,8 @@ namespace WindowsGame1
             return @"Images/hero";
         }
 
+        static public float time_before_recovering_from_bleeding = 3000f;
+
         static public string sheep_texture_path = @"Images/white_sheep";
         static public string cloud_texture_path = @"Images/cloud";
         static public string fireball_texture_path = @"Images/fireball";

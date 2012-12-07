@@ -40,7 +40,8 @@ namespace WindowsGame1
             foreach (AElement elem in getOverlapingElements())
                 if (elem.GetElementType() == EntityType.PLAYER && elem != _player)
                 {
-                    ((AEntity)elem).hurt(_damages);
+                    if (!((AEntity)elem).hurt(_damages))
+                        return false;
                     createExplosion();
                     return true;
                 }

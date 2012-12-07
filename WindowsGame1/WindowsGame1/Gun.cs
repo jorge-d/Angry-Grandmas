@@ -27,7 +27,9 @@ namespace WindowsGame1
         {
             shoot_timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             change_weapon_timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            shoot(direction);
+
+            if (!_player.isBleeding())
+                shoot(direction);
         }
 
         public void shoot(Direction dir)

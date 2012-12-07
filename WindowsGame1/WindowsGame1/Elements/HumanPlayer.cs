@@ -13,6 +13,9 @@ namespace WindowsGame1
     {
         private Gun gun;
         private int player_nb;
+        private bool bleeding = false;
+        private float bleedingTimer;
+        private float cleeping;
 
         public HumanPlayer(float posx, float posy, int nb) :
             base(Defaults.humanTexturePath(nb), Defaults.player_width, Defaults.player_height ,posx, posy, Defaults.player_speed, Defaults.player_health)
@@ -21,17 +24,59 @@ namespace WindowsGame1
             player_nb = nb;
         }
 
+        private void updateBleedingTimer(GameTime gameTime)
+        {
+            bleedingTimer -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            cleeping += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (bleedingTimer < 0f)
+            {
+                bleeding = false;
+                _color = Color.White;
+            }
+            else if (cleeping > 250)
+            {
+                if (_color == Color.Red)
+                    _color = Color.White;
+                else
+                    _color = Color.Red;
+                cleeping = 0;
+            }
+        }
+
+        public bool isBleeding()
+        {
+            return bleeding;
+        }
+
         public override bool update(GameTime gameTime)
         {
             base.update(gameTime);
-
+            if (isBleeding())
+                updateBleedingTimer(gameTime);
             updateUsingKeyboard(gameTime);
             gun.update(gameTime, sprite.getLookingDirection());
             return true;
         }
 
-        private Direction moveUsingKeyboard()
+        protected override bool removeLife(int damages)
         {
+            if (bleeding == false)
+            {
+                base.removeLife(damages);
+                _color = Color.Red;
+                bleeding = true;
+                cleeping = 0f;
+                bleedingTimer = Defaults.time_before_recovering_from_bleeding;
+                return true;
+            }
+            return false;
+        } 
+
+        private void updateUsingKeyboard(GameTime gameTime)
+        {
+            if (!isMoveTimerElapsed())
+                return;
+
             KeyboardState kS = Keyboard.GetState();
             Direction dir = Direction.NONE;
 
@@ -46,16 +91,7 @@ namespace WindowsGame1
 
             if (dir != Direction.NONE)
                 move(dir);
-            return dir;
-        }
-
-        private void updateUsingKeyboard(GameTime gameTime)
-        {
-            if (isMoveTimerElapsed())
-            {
-                Direction dir = moveUsingKeyboard();
-                sprite.animate(dir);
-            }
+            sprite.animate(dir);
         }
     }
 }

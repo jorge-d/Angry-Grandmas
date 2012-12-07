@@ -32,7 +32,7 @@ namespace WindowsGame1
 
         public override void draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_texture, getPosition(), sprite.SourceRect, Color.White, 0f, Vector2.Zero, _scale, SpriteEffects.None, 0);
+            spriteBatch.Draw(_texture, getPosition(), sprite.SourceRect, _color, 0f, Vector2.Zero, _scale, SpriteEffects.None, 0);
         }
 
         public override bool update(Microsoft.Xna.Framework.GameTime gameTime)

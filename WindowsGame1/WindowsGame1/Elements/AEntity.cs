@@ -19,8 +19,14 @@ namespace WindowsGame1
 
         public bool hurt(int damages)
         {
+            return removeLife(damages);
+        }
+
+        // Returns true if an explosion should occur
+        protected virtual bool removeLife(int damages)
+        {
             _health -= damages;
-            return isAlive();
+            return true;
         }
 
         protected bool isAlive()
