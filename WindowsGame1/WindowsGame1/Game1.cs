@@ -119,7 +119,7 @@ namespace WindowsGame1
             timer += gameTime.ElapsedGameTime;
             time_display = timer.Seconds + ":" + (timer.Milliseconds / 10);
 
-            if (timer.Seconds >= 60)
+            if (timer.Seconds >= 60 || timer.Minutes >= 1)
             {
                 game_over = true;
                 game_over_msg = _stage.endOfGame();
