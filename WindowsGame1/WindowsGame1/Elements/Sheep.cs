@@ -12,10 +12,12 @@ namespace WindowsGame1
     {
         static private Random r = new Random();
         static public int sheep_instances = 0;
+        private Healthbar health_display;
 
          public Sheep(float posx, float posy) :
             base(Defaults.getSheepRandomTexture(), 32, 31,  posx, posy, Defaults.sheep_speed, Defaults.sheep_health)
         {
+            health_display = new Healthbar(_game);
             pickRandomDirection();
             sheep_instances++;
         }
@@ -38,7 +40,15 @@ namespace WindowsGame1
                 sheep_instances--;
                 return false;
             }
+            health_display.update(getPosition(), _health);
             return true;
+        }
+
+        public override void draw(SpriteBatch spriteBatch)
+        {
+            base.draw(spriteBatch);
+
+            health_display.Draw(spriteBatch);
         }
 
         private bool moveSheep()

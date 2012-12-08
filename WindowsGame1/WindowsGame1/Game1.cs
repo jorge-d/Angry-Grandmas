@@ -19,6 +19,8 @@ namespace WindowsGame1
         private GraphicsDeviceManager graphics;
 
         public SpriteFont font = null;
+        public Texture2D textureGreen = null;
+        public Texture2D textureRed = null;
         private SpriteBatch spriteBatch;
         static Game1 _instance;
         private Stage _stage;
@@ -70,6 +72,11 @@ namespace WindowsGame1
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("angrygrandma");
+
+            textureRed = new Texture2D(GraphicsDevice, 1, 1);
+            textureRed.SetData(new Color[] { Color.Red });
+            textureGreen = new Texture2D(GraphicsDevice, 1, 1);
+            textureGreen.SetData(new Color[] { Color.LightGreen });
 
             _stage.init();
         }

@@ -119,6 +119,7 @@
     <Compile Include="Elements\Effects\Explosion.cs" />
     <Compile Include="Elements\Weapons\Fireball.cs" />
     <Compile Include="Gun.cs" />
+    <Compile Include="Healthbar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />

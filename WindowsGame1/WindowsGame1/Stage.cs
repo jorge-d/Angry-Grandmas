@@ -41,6 +41,7 @@ namespace WindowsGame1
 
         public bool init()
         {
+            Sheep.sheep_instances = 0;
             level = new int[Defaults.stage_square_nb_y, Defaults.stage_square_nb_x]; 
             generator = new ElementGenerator();
             loadTexture();
@@ -49,7 +50,7 @@ namespace WindowsGame1
             return true;
         }
 
-        public int update(GameTime gametime)
+        public void update(GameTime gametime)
         {
             LinkedList<AElement> elements = new LinkedList<AElement>(_elements);
 
@@ -57,7 +58,6 @@ namespace WindowsGame1
                 if (!element.update(gametime))
                     _elements.Remove(element);
             generator.update(gametime);
-            return Sheep.sheep_instances = 0;
         }
 
         public string endOfGame()
