@@ -35,13 +35,9 @@ namespace WindowsGame1
             _speed = speed;
 
             if (textures.Contains(texture_path))
-            {
-                Console.WriteLine("ALREADY CONTAINS " + texture_path);
                 _texture = (Texture2D)textures[texture_path];
-            }
             else
             {
-                Console.WriteLine("NEW TEXTURE: " + texture_path);
                 _texture = _game.Content.Load<Texture2D>(texture_path);
                 textures.Add(texture_path, _texture);
             }
