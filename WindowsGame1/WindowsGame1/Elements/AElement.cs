@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System.Collections;
 
 namespace WindowsGame1
 {
@@ -26,12 +27,24 @@ namespace WindowsGame1
         EntityType _type;
 
         static protected Game1 _game = Game1.getGameInstance();
+        static private Hashtable textures = new Hashtable();
 
         public AElement(EntityType type, string texture_path, float posx, float posy, float speed)
         {
             _type = type;
             _speed = speed;
-            _texture = _game.Content.Load<Texture2D>(texture_path);
+
+            if (textures.Contains(texture_path))
+            {
+                Console.WriteLine("ALREADY CONTAINS " + texture_path);
+                _texture = (Texture2D)textures[texture_path];
+            }
+            else
+            {
+                Console.WriteLine("NEW TEXTURE: " + texture_path);
+                _texture = _game.Content.Load<Texture2D>(texture_path);
+                textures.Add(texture_path, _texture);
+            }
 
             Width = _texture.Width;
             Height = _texture.Height;
