@@ -35,7 +35,7 @@ namespace WindowsGame1
             return true;
         }
 
-        protected bool hitsPlayer()
+        protected bool hitsPlayer(bool explode)
         {
             // PLAYER can be a sheep OR a player
             foreach (AElement elem in getOverlapingElements())
@@ -51,7 +51,10 @@ namespace WindowsGame1
                         _player.incrementScore(Defaults.SCORE_ON_HIT);
                     else // The target was killed - It was a sheep
                         _player.incrementScore(Defaults.SCORE_ON_DEATH);
-                    createExplosion();
+                    if (explode)
+                        createExplosion();
+                    else if (e is HumanPlayer)
+                        _game.player_hit_sound.Play();
                     return true;
                 }
             return false;

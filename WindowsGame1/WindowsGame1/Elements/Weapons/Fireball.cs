@@ -20,7 +20,7 @@ namespace WindowsGame1
 
             if (isMoveTimerElapsed())
             {
-                hitsPlayer();
+                hitsPlayer(false);
                 return move();
             }
             return true;

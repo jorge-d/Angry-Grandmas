@@ -32,6 +32,7 @@ namespace WindowsGame1
         private Vector2 game_over_msg_position;
 
         public SoundEffect sheep_death_sound;
+        public SoundEffect player_hit_sound;
         public SoundEffect explosion_sound;
 
         static public Game1 getGameInstance()
@@ -82,6 +83,7 @@ namespace WindowsGame1
             textureGreen.SetData(new Color[] { Color.LightGreen });
 
             sheep_death_sound = Content.Load<SoundEffect>(Defaults.sheep_death_sound);
+            player_hit_sound = Content.Load<SoundEffect>(Defaults.player_hit_sound);
             explosion_sound = Content.Load<SoundEffect>(Defaults.explosion_sound);
 
             _stage.init();

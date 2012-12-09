@@ -21,7 +21,7 @@ namespace WindowsGame1
 
             if (!move(_direction))
                 createExplosion();
-            else if (!hitsPlayer())
+            else if (!hitsPlayer(true))
                 return true;
             return false;
         }

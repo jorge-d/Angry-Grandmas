@@ -53,8 +53,9 @@ namespace WindowsGame1
         static public string world_texture_path = @"Images/world_elements";
         static public string blood_texture_path = @"Images/blood";
 
-        static public string explosion_sound = @"Sounds/explosion";
-        static public string sheep_death_sound = @"Sounds/bloodsplash";
+        static public string explosion_sound = @"Sounds/smooth_explosion";
+        static public string player_hit_sound = @"Sounds/monsterkill";
+        static public string sheep_death_sound = @"Sounds/cut_sheep";
         
         static public float sheep_speed = 1f;
         static public int sheep_health = 10;
