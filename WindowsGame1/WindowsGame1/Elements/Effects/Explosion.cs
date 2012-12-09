@@ -9,6 +9,8 @@ namespace WindowsGame1
 {
     class Explosion : AAnimate
     {
+        private bool sound_got_player = false;
+
         public Explosion(float posx, float posy, float scale) :
             base(new ExplosionAnimation(), EntityType.EXPLOSION, Defaults.explosion_texture_path, posx, posy, 0)
         {
@@ -17,6 +19,11 @@ namespace WindowsGame1
 
         public override bool update(GameTime gameTime)
         {
+            if (!sound_got_player)
+            {
+                _game.explosion_sound.Play();
+                sound_got_player = true;
+            }
             base.update(gameTime);
 
             sprite.animate(Direction.NONE);

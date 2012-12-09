@@ -36,6 +36,7 @@ namespace WindowsGame1
 
             if (!isAlive())
             {
+                _game.sheep_death_sound.Play();
                 _stage.addElement(new Blood(getPosition().X - 16, getPosition().Y - 16));
                 sheep_instances--;
                 return false;
