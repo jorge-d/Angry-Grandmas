@@ -56,7 +56,10 @@ namespace WindowsGame1
         static public string explosion_sound = @"Sounds/smooth_explosion";
         static public string player_hit_sound = @"Sounds/monsterkill";
         static public string sheep_death_sound = @"Sounds/cut_sheep";
-        
+
+        static public int timer_seconds_number = 60;
+        static public int timer_minutes_number = 0;
+
         static public float sheep_speed = 1f;
         static public int sheep_health = 10;
         static public int cloud_damages = 2;
