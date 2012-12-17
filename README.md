@@ -1,13 +1,13 @@
- Angry-Grandmas
+# Angry-Grandmas
 
 Griffth Game Development project : A 2D game built in C# using XNA4
 
-1. Rules
+## Rules
 It's a two player game. The one who won is the one with the greatest score within one minute.
 Hiting a sheep/player worth 1 point, killing a sheep worth 3 points.
 You cannot kill a player but when you shoot him he cannot shoot anymore during 3 seconds.
 
-2. Controls
+## Controls
 * Player 1
   * Move : AWSD
   * Change Weapon: Q
@@ -22,7 +22,7 @@ You cannot kill a player but when you shoot him he cannot shoot anymore during 3
   * Exit: Escape
   * Restart: Enter
 
-3. Optionnal developments
+## Optionnal developments
 * Add sound for explosion / sheep death / player hurt / end of game
 * Better map generation
 * More weapons
