@@ -22,7 +22,7 @@ You cannot kill a player but when you shoot him he cannot shoot anymore during 3
   * Exit: Escape
   * Restart: Enter
 
-## Optionnal developments
+## Missing features...
 * Add sound for explosion / sheep death / player hurt / end of game
 * Better map generation
 * More weapons
